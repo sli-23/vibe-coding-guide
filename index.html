@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>從零開始的 Vibe Coding｜給完全新手的入門指南</title>
+<meta name="description" content="沒有任何程式背景也能開始：什麼是 Vibe Coding、Codex 與 Claude Code 怎麼選、第一個專案、Plan Mode、GitHub 與免費上線。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf6ec; --paper2:#f4ecdc; --ink:#3b3226; --ink2:#6d604e; --line:#e3d6bf;
+  --apricot:#f6c9a0; --apricot-d:#d9783b; --mint:#bfe3d0; --mint-d:#2f8a63;
+  --sky:#c7dcf2; --sky-d:#3a6ea8; --lav:#ddd3f0; --lav-d:#6b55a8; --rose:#f4c6c6; --rose-d:#b84a4a;
+  --hand:"LXGW WenKai TC","Noto Sans TC",cursive;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.85;
+  background-image:linear-gradient(var(--paper) 31px,transparent 1px),linear-gradient(90deg,transparent 0,transparent);
+  background-size:100% 32px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(transparent 0 31px,rgba(170,150,120,.10) 31px 32px)}
+a{color:var(--sky-d)}
+img,svg{max-width:100%;display:block}
+#progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--apricot-d),var(--mint-d));width:0;z-index:50}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:48px;max-width:1180px;margin:0 auto;padding:0 28px}
+nav.toc{position:sticky;top:0;height:100vh;padding:40px 0;font-family:var(--hand)}
+nav.toc .brand{font-size:22px;font-weight:700;margin-bottom:20px;line-height:1.3}
+nav.toc .brand small{display:block;font-size:14px;color:var(--ink2);font-weight:400}
+nav.toc a{display:flex;gap:10px;align-items:center;padding:7px 12px;margin:2px 0;border-radius:10px;color:var(--ink2);text-decoration:none;font-size:17px;transition:.2s}
+nav.toc a .n{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-family:var(--mono);flex:none}
+nav.toc a:hover{background:var(--paper2)}
+nav.toc a.on{background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--line)}
+nav.toc a.on .n{background:var(--apricot);border-color:var(--apricot-d)}
+main{padding:40px 0 80px;min-width:0}
+
+/* type */
+h1,h2,h3{font-family:var(--hand);line-height:1.35;margin:0}
+h1{font-size:clamp(34px,5vw,54px)}
+h2{font-size:clamp(28px,3.6vw,38px);display:flex;align-items:center;gap:14px;margin-bottom:8px}
+h2 .chip{font-family:var(--mono);font-size:14px;background:var(--apricot);border:2px solid var(--ink);border-radius:8px;padding:2px 10px;transform:rotate(-3deg)}
+h3{font-size:24px;margin:36px 0 10px}
+.lead{font-size:19px;color:var(--ink2)}
+section{padding:56px 0 24px;border-top:2px dashed var(--line)}
+section:first-of-type{border-top:0}
+p{margin:12px 0}
+mark{background:linear-gradient(transparent 55%,var(--apricot) 55%);color:inherit;padding:0 2px}
+code{font-family:var(--mono);font-size:.88em;background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+kbd{font-family:var(--mono);font-size:.85em;background:#fff;border:1.5px solid var(--ink2);border-bottom-width:3px;border-radius:6px;padding:0 6px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding-top:20px}
+.hero .tag{display:inline-block;font-family:var(--hand);background:var(--mint);border:2px solid var(--ink);border-radius:999px;padding:2px 14px;transform:rotate(-2deg);margin-bottom:14px}
+.promise{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.promise div{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:14px;box-shadow:4px 4px 0 var(--line);font-size:15px}
+.promise b{display:block;font-family:var(--hand);font-size:19px}
+
+/* cards & callouts */
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:20px 22px;box-shadow:5px 5px 0 var(--line);margin:18px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note{border-radius:14px;padding:14px 18px 14px 56px;margin:18px 0;position:relative;border:2px solid}
+.note::before{position:absolute;left:16px;top:12px;font-size:24px}
+.note.tip{background:#eef8f2;border-color:var(--mint-d)} .note.tip::before{content:"💡"}
+.note.try{background:#fdf1e6;border-color:var(--apricot-d)} .note.try::before{content:"✍️"}
+.note.word{background:#eef3fa;border-color:var(--sky-d)} .note.word::before{content:"📖"}
+.note.warn{background:#fbeeee;border-color:var(--rose-d)} .note.warn::before{content:"⚠️"}
+.note b.t{font-family:var(--hand);font-size:18px;display:block}
+figure{margin:24px 0}
+figcaption{font-family:var(--hand);color:var(--ink2);text-align:center;margin-top:8px;font-size:16px}
+.illus{background:#fff;border:2px solid var(--ink);border-radius:18px;padding:16px;box-shadow:5px 5px 0 var(--line)}
+
+/* steps */
+ol.steps{list-style:none;padding:0;counter-reset:s;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:4px 0 18px 58px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;background:var(--apricot);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--hand);font-weight:700;font-size:19px}
+ol.steps>li::after{content:"";position:absolute;left:20px;top:44px;bottom:2px;border-left:2px dashed var(--line)}
+ol.steps>li:last-child::after{display:none}
+ol.steps>li b.h{font-family:var(--hand);font-size:20px;display:block}
+
+/* table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:5px 5px 0 var(--line);font-size:15.5px}
+.tbl th,.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.tbl thead th{background:var(--paper2);font-family:var(--hand);font-size:18px}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-weight:700;white-space:nowrap;color:var(--ink2)}
+
+/* mockups */
+.term{background:#2b2620;color:#f1e7d6;border-radius:14px;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--line);font-family:var(--mono);font-size:14px;line-height:1.7;overflow:hidden;margin:18px 0}
+.term .bar{background:#3d362d;padding:8px 12px;display:flex;gap:7px;align-items:center}
+.term .bar i{width:12px;height:12px;border-radius:50%;display:block}
+.term .bar span{margin-left:10px;color:#b7a98f;font-size:12px}
+.term pre{margin:0;padding:16px 18px;white-space:pre-wrap;word-break:break-word}
+.term .p{color:#8fd0a8} .term .c{color:#9c8f78} .term .y{color:#f6c27a} .term .b{color:#9cc4f0} .term .u{color:#fff;font-weight:600}
+.term .box{border:1px solid #6f6455;border-radius:8px;padding:6px 10px;display:block;margin:6px 0}
+.copy{position:relative}
+.copy button{position:absolute;right:10px;top:46px;font-family:var(--hand);font-size:13px;background:var(--paper);border:1.5px solid var(--ink);border-radius:8px;padding:2px 10px;cursor:pointer}
+.chat{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:5px 5px 0 var(--line);padding:18px;margin:18px 0}
+.bub{max-width:85%;padding:10px 14px;border-radius:16px;margin:8px 0;font-size:15.5px}
+.bub.me{background:var(--sky);margin-left:auto;border-bottom-right-radius:4px}
+.bub.ai{background:var(--paper2);border-bottom-left-radius:4px}
+.bub .who{font-family:var(--hand);font-size:13px;color:var(--ink2);display:block}
+.browser{border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:#fff;box-shadow:5px 5px 0 var(--line)}
+.browser .bar{background:var(--paper2);padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--ink)}
+.browser .bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.browser .url{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:1px 12px;font-family:var(--mono);font-size:12.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* prompt compare */
+.pc{border-radius:14px;padding:16px 18px;border:2px solid var(--ink)}
+.pc.bad{background:#fbeeee} .pc.good{background:#eef8f2}
+.pc .lbl{font-family:var(--hand);font-size:19px;font-weight:700}
+.pc q{display:block;font-family:var(--hand);font-size:18px;margin:8px 0;quotes:"「" "」"}
+
+/* video */
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin:18px 0}
+.vid{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 var(--line)}
+.vid .th{position:relative;aspect-ratio:16/9;background:#222 center/cover;cursor:pointer;border:0;width:100%;padding:0;display:block}
+.vid .th::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.35))}
+.vid .th span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:44px;border-radius:12px;background:#e33;z-index:1;display:grid;place-items:center}
+.vid .th span::before{content:"";border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
+.vid .th em{position:absolute;right:8px;bottom:8px;z-index:1;color:#fff;font-style:normal;font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.7);padding:0 6px;border-radius:4px}
+.vid iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.vid .meta{padding:10px 14px 14px;font-size:14.5px;line-height:1.55}
+.vid .meta b{display:block;font-size:15px}
+.vid .meta .ch{color:var(--ink2);font-size:13px}
+.vid .meta .why{display:inline-block;margin-top:6px;background:var(--mint);border-radius:6px;padding:0 8px;font-size:12.5px;font-family:var(--hand)}
+.vid .meta a{font-size:12.5px}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.gloss div{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:14px;box-shadow:3px 3px 0 var(--line)}
+.gloss .w{font-family:var(--mono);font-weight:600;font-size:16px}
+.gloss .zh{font-family:var(--hand);font-size:18px;color:var(--apricot-d)}
+.gloss p{font-size:14.5px;margin:6px 0 0;line-height:1.6}
+
+details{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px 18px;margin:12px 0;box-shadow:3px 3px 0 var(--line)}
+details summary{font-family:var(--hand);font-size:19px;cursor:pointer}
+details[open] summary{margin-bottom:6px}
+.check{list-style:none;padding:0}
+.check li{padding-left:34px;position:relative;margin:8px 0}
+.check li::before{content:"";position:absolute;left:0;top:5px;width:20px;height:20px;border:2px solid var(--ink);border-radius:5px;background:#fff}
+/* ADHD-friendly：時間、重點、完成、下一步 */
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px;font-family:var(--hand);font-size:15px}
+.meta span{background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:0 12px}
+.tldr{background:var(--ink);color:var(--paper);border-radius:14px;padding:14px 18px;margin:14px 0 22px;font-size:16.5px}
+.tldr b{font-family:var(--hand);color:var(--apricot);font-size:17px;margin-right:6px}
+.tldr ol{margin:6px 0 0;padding-left:22px}
+.done{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:30px 0 8px;padding:16px 18px;border:2px dashed var(--mint-d);border-radius:14px;background:#f3faf6}
+.done button{font-family:var(--hand);font-size:17px;border:2px solid var(--ink);border-radius:999px;background:#fff;padding:4px 18px;cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+.done.ok button{background:var(--mint-d);color:#fff}
+.done .next{flex:1;min-width:220px;font-size:15.5px}
+.done .next b{font-family:var(--hand)}
+nav.toc a.fin .n{background:var(--mint);border-color:var(--mint-d)}
+nav.toc a.fin .n::after{content:"✓";font-size:13px}
+nav.toc a.fin .n i{display:none}
+.count{font-family:var(--hand);font-size:15px;margin:0 0 14px;padding:6px 12px;border-radius:10px;background:#fff;border:1.5px solid var(--line)}
+.count .bar2{height:8px;border-radius:99px;background:var(--paper2);margin-top:4px;overflow:hidden}
+.count .bar2 i{display:block;height:100%;background:var(--mint-d);width:0;transition:.4s}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.map a{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--line);font-size:14px;line-height:1.5}
+.map a b{display:block;font-family:var(--hand);font-size:17px}
+.map a em{font-style:normal;color:var(--apricot-d);font-family:var(--mono);font-size:12.5px}
+.tok{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0}
+.tok span{font-family:var(--mono);font-size:15px;padding:2px 6px;border-radius:6px;border:1.5px solid var(--ink)}
+.skill{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start}
+.skill .ic{width:56px;height:56px;border-radius:14px;border:2px solid var(--ink);display:grid;place-items:center;font-size:26px}
+.skill b{font-family:var(--hand);font-size:19px}
+.skill .src{font-size:12.5px;color:var(--ink2);font-family:var(--mono)}
+footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-size:14px;color:var(--ink2)}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 18px}
+  nav.toc{position:sticky;top:0;height:auto;padding:10px 0;background:var(--paper);z-index:20;display:flex;overflow-x:auto;gap:4px;border-bottom:2px dashed var(--line)}
+  nav.toc .brand{display:none}
+  nav.toc a{white-space:nowrap;font-size:15px;padding:4px 10px}
+  nav.toc .count{display:none}
+  .hero,.grid2,.grid3,.promise{grid-template-columns:1fr}
+  .map{grid-template-columns:1fr 1fr}
+  .tbl{font-size:14px} .tbl td:first-child{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<nav class="toc" id="toc">
+  <div class="brand">從零開始的<br>Vibe Coding<small>一份給新手的筆記本</small></div>
+  <div class="count" id="count">已完成 <b id="cnum">0</b> / 8 章<div class="bar2"><i id="cbar"></i></div></div>
+  <a href="#hello"><span class="n"><i>0</i></span>開始之前</a>
+  <a href="#what"><span class="n"><i>1</i></span>什麼是 Vibe Coding</a>
+  <a href="#tools"><span class="n"><i>2</i></span>Codex 還是 Claude Code</a>
+  <a href="#tokens"><span class="n"><i>3</i></span>Token 與計費</a>
+  <a href="#start"><span class="n"><i>4</i></span>動手做第一個網頁</a>
+  <a href="#plan"><span class="n"><i>5</i></span>Plan Mode 先想再做</a>
+  <a href="#skills"><span class="n"><i>6</i></span>Skills 技能包</a>
+  <a href="#github"><span class="n"><i>7</i></span>GitHub 與上線</a>
+  <a href="#faq"><span class="n"><i>8</i></span>卡關了怎麼辦</a>
+</nav>
+
+<main>
+<!-- ============ 0 HERO ============ -->
+<section id="hello">
+  <div class="hero">
+    <div>
+      <span class="tag">完全零基礎也 OK ✿</span>
+      <h1>從零開始的<br><mark>Vibe Coding</mark></h1>
+      <p class="lead">不用先學程式語言。你只要會「把想法說清楚」，就能請 AI 幫你把網頁、小工具、小遊戲做出來——再把它放上網路，傳給任何人看。</p>
+    </div>
+    <figure class="illus" style="margin:0">
+      <svg viewBox="0 0 360 260" role="img" aria-label="一個人對 AI 說出想法，AI 做出網頁">
+        <defs><pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#e3d6bf"/></pattern></defs>
+        <rect width="360" height="260" fill="url(#dots)"/>
+        <!-- person -->
+        <circle cx="70" cy="120" r="30" fill="#f6dcc3" stroke="#3b3226" stroke-width="2.5"/>
+        <path d="M42 108 q28 -34 58 -2 q-8 -26 -30 -26 q-24 0 -28 28z" fill="#5a4636" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="61" cy="122" r="2.6" fill="#3b3226"/><circle cx="80" cy="122" r="2.6" fill="#3b3226"/>
+        <path d="M63 133 q8 7 15 0" fill="none" stroke="#3b3226" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="54" cy="130" r="4" fill="#f4b4a4" opacity=".7"/><circle cx="88" cy="130" r="4" fill="#f4b4a4" opacity=".7"/>
+        <path d="M30 220 q0 -60 40 -60 q40 0 40 60z" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/>
+        <!-- speech -->
+        <path d="M100 40 h120 a14 14 0 0 1 14 14 v30 a14 14 0 0 1 -14 14 h-80 l-22 18 l4 -18 h-22 a14 14 0 0 1 -14 -14 v-30 a14 14 0 0 1 14 -14z" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="167" y="67" text-anchor="middle" font-family="LXGW WenKai TC, sans-serif" font-size="15" fill="#3b3226">幫我做一個</text>
+        <text x="167" y="87" text-anchor="middle" font-family="LXGW WenKai TC, sans-serif" font-size="15" fill="#d9783b">可愛的自我介紹頁！</text>
+        <!-- robot -->
+        <rect x="250" y="112" width="74" height="58" rx="16" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+        <line x1="287" y1="112" x2="287" y2="96" stroke="#3b3226" stroke-width="2.5"/><circle cx="287" cy="92" r="6" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="272" cy="138" r="6" fill="#fff" stroke="#3b3226" stroke-width="2"/><circle cx="302" cy="138" r="6" fill="#fff" stroke="#3b3226" stroke-width="2"/>
+        <circle cx="273" cy="139" r="2.5" fill="#3b3226"/><circle cx="303" cy="139" r="2.5" fill="#3b3226"/>
+        <path d="M278 154 q9 6 18 0" fill="none" stroke="#3b3226" stroke-width="2.2" stroke-linecap="round"/>
+        <rect x="258" y="172" width="58" height="40" rx="10" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+        <!-- arrow & webpage -->
+        <path d="M250 200 q-40 30 -80 10" fill="none" stroke="#d9783b" stroke-width="2.5" stroke-dasharray="5 5"/>
+        <path d="M176 204 l-8 6 l10 3" fill="none" stroke="#d9783b" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="120" y="170" width="74" height="62" rx="8" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="120" y="170" width="74" height="12" rx="6" fill="#f4ecdc" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="140" cy="200" r="9" fill="#f6c9a0"/><rect x="155" y="193" width="30" height="5" rx="2" fill="#bfe3d0"/><rect x="155" y="203" width="22" height="5" rx="2" fill="#e3d6bf"/>
+        <rect x="130" y="216" width="54" height="5" rx="2" fill="#e3d6bf"/>
+        <text x="330" y="60" font-size="20">✨</text><text x="20" y="40" font-size="16">⭐</text><text x="215" y="245" font-size="16">💛</text>
+      </svg>
+    </figure>
+  </div>
+  <div class="tldr"><b>現在就做：</b>先花 5 分鐘讀第 1 章。全部讀完＋做完大約 <b style="color:var(--mint)">2 小時</b>，可以分三天：<br>
+    Day 1 → 第 1–3 章（觀念，約 25 分鐘）　Day 2 → 第 4–6 章（動手，約 50 分鐘）　Day 3 → 第 7–8 章（上線，約 30 分鐘）</div>
+  <div class="map">
+    <a href="#what"><em>01 · 5 分</em><b>Vibe Coding</b>是什麼</a>
+    <a href="#tools"><em>02 · 8 分</em><b>選工具</b>Codex／Claude Code</a>
+    <a href="#tokens"><em>03 · 8 分</em><b>Token</b>怎麼算錢</a>
+    <a href="#start"><em>04 · 30 分</em><b>第一個網頁</b>動手做</a>
+    <a href="#plan"><em>05 · 6 分</em><b>Plan Mode</b>先想再做</a>
+    <a href="#skills"><em>06 · 10 分</em><b>Skills</b>技能包</a>
+    <a href="#github"><em>07 · 25 分</em><b>GitHub</b>免費上線</a>
+    <a href="#faq"><em>08 · 5 分</em><b>卡關</b>怎麼辦</a>
+  </div>
+  <div class="note tip"><b class="t">怎麼讀這份筆記？</b>每章開頭有「一句話重點」，結尾有「✓ 我讀完了」按鈕和下一步。按下去，左邊目錄會打勾、進度會被記住——下次回來直接接著讀。</div>
+  <div class="done" data-key="hello"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>往下讀第 1 章（5 分鐘）。</div></div>
+
+</section>
+
+<!-- ============ 1 WHAT ============ -->
+<section id="what">
+  <h2><span class="chip">01</span>什麼是 Vibe Coding？</h2>
+  <div class="meta"><span>⏱ 約 5 分鐘</span><span>📖 只要讀</span></div>
+  <div class="tldr"><b>一句話重點</b>你負責說「想要什麼」，AI 負責寫程式；你看結果、再說哪裡要改，一直循環到滿意。</div>
+  <p>這個詞是 AI 研究者 Andrej Karpathy 在 2025 年初提出的。他形容一種新的寫程式方式：不必逐行看懂程式碼，而是用平常講話的方式描述需求，看 AI 做出來的結果，覺得哪裡不對就再說一次，像是跟著「感覺（vibe）」一路調整下去。</p>
+
+  <figure class="illus">
+    <svg viewBox="0 0 720 300" role="img" aria-label="Vibe Coding 的四步循環：說、做、看、改">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <circle cx="360" cy="150" r="92" fill="none" stroke="#e3d6bf" stroke-width="3" stroke-dasharray="8 8"/>
+        <text x="360" y="143" text-anchor="middle" font-size="22" font-weight="700">重複幾輪</text>
+        <text x="360" y="170" text-anchor="middle" font-size="16" fill="#6d604e">直到你滿意為止</text>
+        <!-- nodes -->
+        <g><rect x="285" y="12" width="150" height="64" rx="18" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="360" y="40" text-anchor="middle" font-size="20" font-weight="700">① 你說</text>
+          <text x="360" y="63" text-anchor="middle" font-size="14">用中文描述想要的東西</text></g>
+        <g><rect x="520" y="118" width="170" height="64" rx="18" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="605" y="146" text-anchor="middle" font-size="20" font-weight="700">② AI 寫</text>
+          <text x="605" y="169" text-anchor="middle" font-size="14">產生並存好程式檔案</text></g>
+        <g><rect x="285" y="224" width="150" height="64" rx="18" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="360" y="252" text-anchor="middle" font-size="20" font-weight="700">③ 你看</text>
+          <text x="360" y="275" text-anchor="middle" font-size="14">打開瀏覽器看結果</text></g>
+        <g><rect x="30" y="118" width="170" height="64" rx="18" fill="#ddd3f0" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="115" y="146" text-anchor="middle" font-size="20" font-weight="700">④ 你說哪裡要改</text>
+          <text x="115" y="169" text-anchor="middle" font-size="14">「按鈕再大一點」</text></g>
+        <!-- arrows -->
+        <g fill="none" stroke="#d9783b" stroke-width="3" stroke-linecap="round">
+          <path d="M440 50 q100 10 150 64"/><path d="M582 104 l10 12 l3 -15"/>
+          <path d="M600 186 q-40 60 -160 70"/><path d="M452 248 l-14 8 l14 7"/>
+          <path d="M280 258 q-120 -10 -160 -72"/><path d="M114 198 l4 -15 l11 10"/>
+          <path d="M120 114 q30 -60 160 -66"/><path d="M266 40 l15 8 l-13 9"/>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Vibe Coding 的循環：說 → AI 寫 → 看 → 再說</figcaption>
+  </figure>
+
+  <h3>跟「傳統寫程式」差在哪？</h3>
+  <div class="grid2">
+    <div class="card">
+      <b style="font-family:var(--hand);font-size:20px">🧱 傳統寫程式</b>
+      <p>先花幾個月學語法（HTML、CSS、JavaScript……），再一個字一個字打出程式碼。錯一個符號，畫面可能就壞掉。</p>
+      <p style="color:var(--ink2);font-size:15px">像是自己學木工，從鋸木頭開始做一張桌子。</p>
+    </div>
+    <div class="card" style="background:#fdf6ee">
+      <b style="font-family:var(--hand);font-size:20px">🎬 Vibe Coding</b>
+      <p>你像「導演」或「客戶」：描述畫面、提出修改意見。AI 像一位很快、很有耐心的工程師，負責動手。</p>
+      <p style="color:var(--ink2);font-size:15px">像是跟木工師傅說：「我想要一張圓形、淺色、可以放兩杯咖啡的小桌子。」</p>
+    </div>
+  </div>
+
+  <h3>它適合做什麼？</h3>
+  <div class="grid3">
+    <div class="card"><b>✅ 很適合</b><br>個人網頁、作品集、活動邀請頁、小遊戲、記帳表、待辦清單、旅行行程頁</div>
+    <div class="card"><b>🤔 要多花心思</b><br>需要登入、存資料、多人一起用的 App——可以做，但建議先熟悉基本觀念</div>
+    <div class="card"><b>🚫 先別碰</b><br>涉及金流、個資、醫療等「出錯會造成真實損失」的系統</div>
+  </div>
+
+  <div class="note word"><b class="t">名詞小辭典：程式碼（Code）</b>給電腦看的「食譜」。網頁其實就是一份或幾份文字檔，瀏覽器讀了之後，把它畫成你看到的畫面。Vibe coding 就是請 AI 幫你寫這份食譜。</div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="tYhgWRJeYzs" data-len="1:35"><div class="meta"><b>What is vibe coding?</b><span class="ch">Google（英文，可開中文字幕）</span><br><span class="why">1 分半看懂概念</span></div></div>
+    <div class="vid" data-id="tQZXzb88jmo" data-len="1:48"><div class="meta"><b>給我 1 分鐘，帶你認識現在最夯的 Vibe Coding</b><span class="ch">工程師下班有約（中文）</span><br><span class="why">中文快速入門</span></div></div>
+  </div>
+  <div class="done" data-key="what"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>看完上面 1 分半的 Google 影片，然後往下選一個工具。</div></div>
+</section>
+
+<!-- ============ 2 TOOLS ============ -->
+<section id="tools">
+  <h2><span class="chip">02</span>Codex 還是 Claude Code？</h2>
+  <div class="meta"><span>⏱ 約 8 分鐘</span><span>🎯 讀完要選定一個</span></div>
+  <div class="tldr"><b>一句話重點</b>沒付費過 → 先用 Codex（ChatGPT 免費帳號就能試）；已經有 Claude 付費方案 → 用 Claude Code。兩個都有桌面 App，不用碰終端機。</div>
+  <p class="lead">兩個都是「會自己動手的 AI 程式助手」。跟一般聊天機器人最大的差別是：<mark>它們可以直接在你的電腦裡建立、修改檔案</mark>，不用你複製貼上。</p>
+
+  <figure class="illus">
+    <svg viewBox="0 0 720 230" role="img" aria-label="一般聊天 AI 與 AI 程式助手的差別">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <text x="180" y="28" text-anchor="middle" font-size="19" font-weight="700">一般聊天 AI</text>
+        <text x="540" y="28" text-anchor="middle" font-size="19" font-weight="700">AI 程式助手（Codex / Claude Code）</text>
+        <line x1="360" y1="15" x2="360" y2="220" stroke="#e3d6bf" stroke-width="3" stroke-dasharray="6 6"/>
+        <!-- left -->
+        <rect x="30" y="50" width="110" height="80" rx="12" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="42" y="64" width="70" height="10" rx="5" fill="#c7dcf2"/><rect x="60" y="82" width="70" height="10" rx="5" fill="#f4ecdc"/><rect x="42" y="100" width="55" height="10" rx="5" fill="#c7dcf2"/>
+        <text x="85" y="150" text-anchor="middle" font-size="14">AI 給你程式碼</text>
+        <path d="M150 90 h50" stroke="#b84a4a" stroke-width="2.5" stroke-dasharray="4 4"/>
+        <text x="175" y="80" text-anchor="middle" font-size="22">🙋</text>
+        <text x="175" y="118" text-anchor="middle" font-size="13" fill="#b84a4a">你手動複製</text>
+        <rect x="210" y="50" width="120" height="80" rx="12" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="270" y="86" text-anchor="middle" font-size="26">📄❓</text>
+        <text x="270" y="112" text-anchor="middle" font-size="13">存成檔案…放哪？</text>
+        <text x="180" y="190" text-anchor="middle" font-size="15" fill="#6d604e">你要當「搬運工」，容易出錯</text>
+        <!-- right -->
+        <rect x="400" y="50" width="110" height="80" rx="12" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="455" y="98" text-anchor="middle" font-size="30">🤖</text>
+        <path d="M515 90 h45" stroke="#2f8a63" stroke-width="3"/><path d="M552 82 l10 8 l-10 8" fill="none" stroke="#2f8a63" stroke-width="3"/>
+        <rect x="570" y="45" width="130" height="92" rx="12" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="590" y="70" font-size="14">📁 我的網站</text>
+        <text x="605" y="94" font-size="13">📄 index.html ✓</text>
+        <text x="605" y="114" font-size="13">🎨 style.css ✓</text>
+        <text x="540" y="190" text-anchor="middle" font-size="15" fill="#6d604e">它直接幫你建好、改好檔案，你只負責看結果</text>
+      </g>
+    </svg>
+  </figure>
+
+  <h3>一張表看懂</h3>
+  <table class="tbl">
+    <thead><tr><th></th><th>🟢 Codex</th><th>🟠 Claude Code</th></tr></thead>
+    <tbody>
+      <tr><td>出自哪家公司</td><td>OpenAI（做 ChatGPT 的公司）</td><td>Anthropic（做 Claude 的公司）</td></tr>
+      <tr><td>用你現有的帳號</td><td>ChatGPT 帳號</td><td>Claude 帳號</td></tr>
+      <tr><td>費用門檻</td><td><b>免費方案就能用</b>（額度較少）；Plus 約 US$20／月額度較多</td><td><b>需要付費方案</b>，Pro 約 US$20／月起</td></tr>
+      <tr><td>有圖形介面嗎</td><td>有：ChatGPT 桌面 App（Mac / Windows）、網頁版</td><td>有：Claude 桌面 App 的「Code」分頁（Mac / Windows）、網頁版 claude.ai/code</td></tr>
+      <tr><td>終端機版</td><td>Codex CLI</td><td>Claude Code CLI（功能最完整）</td></tr>
+      <tr><td>Plan Mode</td><td>輸入 <code>/plan</code></td><td>按 <kbd>Shift</kbd>+<kbd>Tab</kbd> 切換</td></tr>
+      <tr><td>給新手的感覺</td><td>入門門檻最低，先試再說</td><td>規劃、解釋、改大型專案的能力很受好評，教學資源多</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13.5px;color:var(--ink2)">※ 價格與功能變化很快，以上資訊整理於 2026 年 10 月，實際以官方網站為準。</p>
+
+  <h3>可以在哪裡用？（有沒有 App？）</h3>
+  <p>兩個都有「客戶端」——也就是可以下載安裝、有按鈕和視窗的 App，不一定要打指令。</p>
+  <table class="tbl">
+    <thead><tr><th>使用方式</th><th>🟢 Codex</th><th>🟠 Claude Code</th><th>適合誰</th></tr></thead>
+    <tbody>
+      <tr><td>💻 桌面 App</td><td>✅ ChatGPT 桌面 App（Mac／Windows／Linux）</td><td>✅ Claude 桌面 App →「Code」分頁（Mac／Windows）</td><td><b>新手首選</b></td></tr>
+      <tr><td>🌐 網頁版</td><td>✅ 在 ChatGPT 網頁使用</td><td>✅ claude.ai/code</td><td>不想安裝、在雲端跑</td></tr>
+      <tr><td>📱 手機 App</td><td>✅ ChatGPT App</td><td>✅ Claude App（iOS／Android）</td><td>出門查看進度、下指令</td></tr>
+      <tr><td>⌨️ 終端機</td><td>✅ Codex CLI</td><td>✅ Claude Code CLI</td><td>熟悉之後、想要最完整功能</td></tr>
+      <tr><td>🧩 編輯器外掛</td><td>✅ VS Code 等</td><td>✅ VS Code、JetBrains</td><td>會用程式編輯器的人</td></tr>
+    </tbody>
+  </table>
+  <div class="note word"><b class="t">名詞小辭典：客戶端（Client）</b>你裝在自己電腦或手機上的那個 App。「伺服器端」則是在公司機房裡真正跑 AI 的電腦。你用任何一種客戶端，背後都是同一個 AI。</div>
+
+  <h3>那我該選哪個？</h3>
+  <figure class="illus">
+    <svg viewBox="0 0 720 250" role="img" aria-label="選擇工具的決策圖">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <rect x="235" y="12" width="250" height="56" rx="28" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="360" y="47" text-anchor="middle" font-size="18" font-weight="700">你已經在付費用哪一個？</text>
+        <path d="M290 68 q-90 40 -150 70" fill="none" stroke="#3b3226" stroke-width="2.5"/>
+        <path d="M360 68 v70" fill="none" stroke="#3b3226" stroke-width="2.5"/>
+        <path d="M430 68 q90 40 150 70" fill="none" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="185" y="104" text-anchor="middle" font-size="14" fill="#6d604e">ChatGPT</text>
+        <text x="392" y="110" font-size="14" fill="#6d604e">都沒有</text>
+        <text x="540" y="104" text-anchor="middle" font-size="14" fill="#6d604e">Claude</text>
+        <rect x="40" y="140" width="200" height="90" rx="16" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="140" y="175" text-anchor="middle" font-size="19" font-weight="700">用 Codex</text>
+        <text x="140" y="202" text-anchor="middle" font-size="14">不用多花錢，直接開始</text>
+        <rect x="260" y="140" width="200" height="90" rx="16" fill="#fff4e0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="360" y="172" text-anchor="middle" font-size="17" font-weight="700">先用 Codex 免費試</text>
+        <text x="360" y="196" text-anchor="middle" font-size="14">喜歡了、額度不夠了</text>
+        <text x="360" y="216" text-anchor="middle" font-size="14">再考慮付費升級</text>
+        <rect x="480" y="140" width="200" height="90" rx="16" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="580" y="175" text-anchor="middle" font-size="19" font-weight="700">用 Claude Code</text>
+        <text x="580" y="202" text-anchor="middle" font-size="14">打開桌面 App 的 Code 分頁</text>
+      </g>
+    </svg>
+  </figure>
+  <div class="note tip"><b class="t">真心話</b>對新手來說，兩個工具的差距遠小於「你有沒有開始做」。這份筆記裡的觀念（怎麼下指令、Plan Mode、GitHub）兩邊都通用，選一個用順手，之後要換也很快。</div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="7XzjQa8z0uc" data-len="17:11"><div class="meta"><b>How to Use OpenAI Codex (Step-by-Step Tutorial)</b><span class="ch">Kevin Stratvert（英文）</span><br><span class="why">Codex 一步步上手</span></div></div>
+    <div class="vid" data-id="eMZmDH3T2bY" data-len="14:44"><div class="meta"><b>Claude Code Tutorial for Beginners</b><span class="ch">Kevin Stratvert（英文）</span><br><span class="why">Claude Code 新手版</span></div></div>
+  </div>
+  <div class="done" data-key="tools"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>決定用哪一個，下載它的桌面 App（約 3 分鐘），先不用打開。</div></div>
+</section>
+
+
+<!-- ============ 3 TOKENS ============ -->
+<section id="tokens">
+  <h2><span class="chip">03</span>Token 是什麼？怎麼計費？</h2>
+  <div class="meta"><span>⏱ 約 8 分鐘</span><span>💰 讀完就知道錢花在哪</span></div>
+  <div class="tldr"><b>一句話重點</b>Token 是 AI 讀和寫文字的「計量單位」。新手用<b>月費方案</b>最安心：每月固定費用，用完額度只會暫停，不會被多扣錢。</div>
+
+  <h3>Token = AI 的「字數單位」</h3>
+  <p>AI 不是一個字一個字讀，而是把文字切成一小塊一小塊，每一塊叫一個 <b>token</b>。大概的感覺：</p>
+  <div class="grid2">
+    <div class="card"><b>英文</b>：約 4 個字母 ≈ 1 token
+      <div class="tok"><span style="background:#c7dcf2">Make</span><span style="background:#f6c9a0">&nbsp;me</span><span style="background:#bfe3d0">&nbsp;a</span><span style="background:#ddd3f0">&nbsp;web</span><span style="background:#f4c6c6">page</span></div>
+      <span style="font-size:14px;color:var(--ink2)">5 個 token</span></div>
+    <div class="card"><b>中文</b>：約 1 個字 ≈ 1–2 token
+      <div class="tok"><span style="background:#c7dcf2">幫</span><span style="background:#f6c9a0">我</span><span style="background:#bfe3d0">做</span><span style="background:#ddd3f0">一</span><span style="background:#f4c6c6">個</span><span style="background:#c7dcf2">網</span><span style="background:#f6c9a0">頁</span></div>
+      <span style="font-size:14px;color:var(--ink2)">約 7–10 個 token（依模型而定）</span></div>
+  </div>
+
+  <h3>為什麼 vibe coding 特別「吃」token？</h3>
+  <figure class="illus">
+    <svg viewBox="0 0 720 220" role="img" aria-label="每一輪對話 AI 都要重新讀一次前面所有內容">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <text x="20" y="30" font-size="16" font-weight="700">每說一句話，AI 都要把「到目前為止的全部內容」重讀一次：</text>
+        <text x="20" y="76" font-size="14">第 1 輪</text>
+        <rect x="90" y="58" width="70" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/>
+        <text x="20" y="122" font-size="14">第 2 輪</text>
+        <rect x="90" y="104" width="70" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/><rect x="160" y="104" width="90" height="26" rx="6" fill="#f6c9a0" stroke="#3b3226" stroke-width="2"/><rect x="250" y="104" width="60" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/>
+        <text x="20" y="168" font-size="14">第 3 輪</text>
+        <rect x="90" y="150" width="70" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/><rect x="160" y="150" width="90" height="26" rx="6" fill="#f6c9a0" stroke="#3b3226" stroke-width="2"/><rect x="250" y="150" width="60" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/><rect x="310" y="150" width="150" height="26" rx="6" fill="#bfe3d0" stroke="#3b3226" stroke-width="2"/><rect x="460" y="150" width="60" height="26" rx="6" fill="#c7dcf2" stroke="#3b3226" stroke-width="2"/>
+        <g font-size="13"><rect x="550" y="62" width="16" height="14" rx="3" fill="#c7dcf2" stroke="#3b3226"/><text x="574" y="74">你說的話</text>
+        <rect x="550" y="88" width="16" height="14" rx="3" fill="#f6c9a0" stroke="#3b3226"/><text x="574" y="100">AI 的回答</text>
+        <rect x="550" y="114" width="16" height="14" rx="3" fill="#bfe3d0" stroke="#3b3226"/><text x="574" y="126">AI 讀的檔案</text></g>
+        <text x="20" y="208" font-size="15" fill="#d9783b">→ 對話越長、檔案越多，每一輪用掉的 token 就越多</text>
+      </g>
+    </svg>
+  </figure>
+  <p>所以：<mark>一件事做完，就開一個新對話</mark>。這是最簡單的省錢（也省額度）方法。</p>
+
+  <h3>兩種付費方式</h3>
+  <div class="grid2">
+    <div class="card" style="background:#eef8f2"><b style="font-family:var(--hand);font-size:21px">🍱 月費方案（推薦新手）</b>
+      <p>像「吃到飽，但每 5 小時限量」。每月固定付錢，額度用完就等它重置，<b>不會多扣錢</b>。</p>
+      <ul style="font-size:15px;margin:0;padding-left:20px">
+        <li>ChatGPT：Free $0／Go $8／Plus $20／Pro $100 起</li>
+        <li>Claude：Pro $20（年繳約 $17／月）／Max $100 起</li>
+        <li>額度大多以 5 小時為一個區間重置，另有每週上限</li>
+      </ul></div>
+    <div class="card" style="background:#fdf1e6"><b style="font-family:var(--hand);font-size:21px">🚕 API 按量計費</b>
+      <p>像「計程車跳表」。用多少 token 付多少錢，沒有上限——<b>也沒有天花板</b>。</p>
+      <ul style="font-size:15px;margin:0;padding-left:20px">
+        <li>以「每 100 萬 token」計價，分成輸入（AI 讀的）和輸出（AI 寫的）</li>
+        <li>例：Claude Sonnet 5.5 輸入 $2、輸出 $10／每百萬 token</li>
+        <li>適合工程師、公司，或想精算成本的人</li>
+      </ul></div>
+  </div>
+
+  <div class="card">
+    <b style="font-family:var(--hand);font-size:20px">🧮 粗估：做一個自我介紹網頁要花多少？</b>
+    <p style="margin-bottom:4px">假設來回改 10 輪，AI 總共讀了約 50 萬 token、寫了約 5 萬 token，用 API 價格（Sonnet 5.5）計算：</p>
+    <p style="font-family:var(--mono);font-size:15px;background:var(--paper2);border-radius:10px;padding:10px 14px">0.5 百萬 × $2 ＋ 0.05 百萬 × $10 ＝ $1 ＋ $0.5 ≈ <b>US$1.5</b></p>
+    <p style="font-size:15px;color:var(--ink2);margin:0">用月費方案的話，這只佔一小段額度，不會另外收費。實際用量會因模型、對話長度、檔案多寡而不同，這裡只是讓你有個數量級的感覺。</p>
+  </div>
+
+  <div class="note tip"><b class="t">省額度三招</b>① 一件事一個對話　② 先用 Plan Mode 想清楚，少走冤枉路　③ 不要一次丟一堆不相關的大檔案給 AI</div>
+  <p style="font-size:13.5px;color:var(--ink2)">※ 價格整理於 2026 年 10 月，以 OpenAI 與 Anthropic 官方價格頁為準。</p>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="g3BPM3sBnXA" data-len="5:27"><div class="meta"><b>揭密 AI 背後計費方式：輸入 Token、輸出 Token 與 Prompt Cache 怎麼算？</b><span class="ch">HKT 線上教室（中文）</span><br><span class="why">5 分鐘搞懂計費</span></div></div>
+  </div>
+
+  <div class="done" data-key="tokens"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>打開你選的 App，找到「用量／Usage」頁面看一眼額度（約 1 分鐘）。</div></div>
+</section>
+
+<!-- ============ 4 START ============ -->
+<section id="start">
+  <h2><span class="chip">04</span>動手做第一個網頁</h2>
+  <div class="meta"><span>⏱ 約 30 分鐘</span><span>✍️ 要動手</span><span>🏆 完成後你會有自己的網頁</span></div>
+  <div class="tldr"><b>一句話重點</b>開一個空資料夾 → 在 App 裡選它 → 貼上一段描述 → 打開 index.html 看結果 → 一次改一件事。</div>
+
+  <h3>Step 0｜準備三樣東西</h3>
+  <div class="grid3">
+    <div class="card" style="text-align:center"><div style="font-size:40px">💻</div><b>一台電腦</b><br><span style="font-size:15px">Mac 或 Windows 都可以</span></div>
+    <div class="card" style="text-align:center"><div style="font-size:40px">🔑</div><b>一個帳號</b><br><span style="font-size:15px">ChatGPT（用 Codex）或 Claude 付費帳號（用 Claude Code）</span></div>
+    <div class="card" style="text-align:center"><div style="font-size:40px">📁</div><b>一個空資料夾</b><br><span style="font-size:15px">在桌面新增資料夾，取名 <code>my-first-site</code></span></div>
+  </div>
+
+  <h3>Step 1｜安裝 App 並登入</h3>
+  <ol class="steps">
+    <li><b class="h">下載桌面 App</b>
+      用 Codex：到 chatgpt.com 下載 ChatGPT 桌面 App。<br>
+      用 Claude Code：到 claude.com/download 下載 Claude 桌面 App，打開後點上方的 <b>Code</b> 分頁。</li>
+    <li><b class="h">登入帳號</b>用你平常的帳號登入即可。</li>
+    <li><b class="h">選擇資料夾</b>App 會問你要在哪個資料夾工作——選剛剛建立的 <code>my-first-site</code>。<br><span style="color:var(--ink2);font-size:15px">AI 只會在這個資料夾裡動手，不會亂碰你其他檔案。</span></li>
+  </ol>
+
+  <details>
+    <summary>🖥️ 進階：想用「終端機」版本？點我展開</summary>
+    <p><b>終端機（Terminal）</b>是一個用打字跟電腦溝通的視窗。Mac 按 <kbd>⌘</kbd>+<kbd>空白鍵</kbd> 搜尋「終端機」；Windows 搜尋「PowerShell」。把下面指令貼進去按 Enter：</p>
+    <div class="copy">
+    <div class="term"><div class="bar"><i style="background:#ff6b5e"></i><i style="background:#ffbd2e"></i><i style="background:#28c840"></i><span>終端機 — 安裝 Claude Code（Mac）</span></div>
+<pre><span class="c"># 安裝（只要做一次）</span>
+<span class="p">$</span> <span class="u">curl -fsSL https://claude.ai/install.sh | bash</span>
+
+<span class="c"># 進入你的資料夾，然後啟動</span>
+<span class="p">$</span> <span class="u">cd ~/Desktop/my-first-site</span>
+<span class="p">$</span> <span class="u">claude</span></pre></div><button type="button">複製</button></div>
+    <p style="font-size:15px">Codex CLI 的安裝方式請參考 OpenAI 官方文件。第一次用建議先從桌面 App 開始，比較直覺。</p>
+  </details>
+
+  <h3>Step 2｜跟 AI 說第一句話</h3>
+  <p>在輸入框貼上這段（可以改成你自己的內容）：</p>
+  <div class="chat">
+    <div class="bub me"><span class="who">你</span>幫我做一個自我介紹網頁，存成 index.html。<br>內容：我叫小安，喜歡貓、咖啡和旅行。<br>風格：溫暖、可愛、米色系，手機上也要好看。<br>加一個按鈕，按下去會隨機出現一句今天的小語。</div>
+    <div class="bub ai"><span class="who">AI</span>好的！我會建立 <code>index.html</code>，包含：標題與自我介紹、三個興趣卡片（🐱 ☕ ✈️）、一個「今日小語」按鈕……<br>✅ 已建立 index.html</div>
+  </div>
+
+  <h3>Step 3｜打開看看</h3>
+  <div class="grid2" style="align-items:center">
+    <div>
+      <p>到 <code>my-first-site</code> 資料夾，<b>雙擊</b> <code>index.html</code>，它會在瀏覽器打開。</p>
+      <p>或者直接跟 AI 說：「幫我在瀏覽器打開它」。</p>
+      <div class="note try" style="margin-top:12px"><b class="t">試試看</b>第一次就看到自己的網頁，是很神奇的時刻 ✨ 截個圖留念吧！</div>
+    </div>
+    <figure style="margin:0">
+      <div class="browser">
+        <div class="bar"><i></i><i></i><i></i><span class="url">file:///Desktop/my-first-site/index.html</span></div>
+        <div style="padding:22px;background:#fbf3e6;text-align:center">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--apricot);margin:0 auto 8px;display:grid;place-items:center;font-size:30px">🙂</div>
+          <div style="font-family:var(--hand);font-size:24px;font-weight:700">嗨，我是小安</div>
+          <div style="font-size:14px;color:var(--ink2)">喜歡貓、咖啡和旅行的人</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin:12px 0">
+            <span style="background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px">🐱 貓</span>
+            <span style="background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px">☕ 咖啡</span>
+            <span style="background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px">✈️ 旅行</span>
+          </div>
+          <span style="display:inline-block;background:var(--mint-d);color:#fff;border-radius:999px;padding:4px 16px;font-size:14px">今日小語 ✨</span>
+        </div>
+      </div>
+      <figcaption>你可能會看到類似這樣的畫面</figcaption>
+    </figure>
+  </div>
+
+  <h3>Step 4｜用說的來修改</h3>
+  <p>不滿意？直接說！一次改一件事，效果最好：</p>
+  <div class="chat">
+    <div class="bub me"><span class="who">你</span>標題字再大一點，換成手寫感的字體</div>
+    <div class="bub ai"><span class="who">AI</span>✅ 已把標題改為 48px，使用手寫字體。重新整理頁面就能看到。</div>
+    <div class="bub me"><span class="who">你</span>按鈕按下去的時候加一點彈跳動畫，再多 10 句小語</div>
+    <div class="bub ai"><span class="who">AI</span>✅ 已加入彈跳效果，小語增加到 15 句。</div>
+  </div>
+  <div class="note tip"><b class="t">記得重新整理</b>AI 改完檔案後，回到瀏覽器按 <kbd>⌘</kbd>+<kbd>R</kbd>（Windows 按 <kbd>F5</kbd>）才會看到新版本。</div>
+
+  <h3>怎麼「說」AI 才聽得懂？</h3>
+  <div class="grid2">
+    <div class="pc bad"><span class="lbl">😕 模糊</span><q>幫我做一個網站</q><span style="font-size:15px">AI 只能亂猜：什麼網站？給誰看？長什麼樣？</span></div>
+    <div class="pc good"><span class="lbl">😊 清楚</span><q>幫我做一個咖啡店介紹頁，有菜單、營業時間、地圖，風格要溫暖木頭色，手機上也好看</q><span style="font-size:15px">有「做什麼、有哪些內容、長什麼樣」。</span></div>
+    <div class="pc bad"><span class="lbl">😕 只說結果</span><q>壞掉了</q><span style="font-size:15px">AI 不知道哪裡壞、怎麼壞。</span></div>
+    <div class="pc good"><span class="lbl">😊 描述現象</span><q>按「送出」按鈕沒有反應，我預期會跳出謝謝訊息</q><span style="font-size:15px">說清楚「做了什麼 → 看到什麼 → 預期什麼」。</span></div>
+  </div>
+  <div class="card" style="margin-top:22px">
+    <b style="font-family:var(--hand);font-size:20px">📝 萬用指令公式</b>
+    <p style="font-family:var(--hand);font-size:19px;margin:10px 0">我想做 <mark>【什麼東西】</mark>，給 <mark>【誰】</mark> 用，<br>裡面要有 <mark>【內容 1、2、3】</mark>，風格是 <mark>【形容詞】</mark>。<br>先不要寫程式，先告訴我你打算怎麼做。</p>
+    <span style="font-size:15px;color:var(--ink2)">最後一句很重要——這就是下一章的 Plan Mode 精神。</span>
+  </div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="2pM-7fBXc_M" data-len="27:03"><div class="meta"><b>Claude Code 保姆級教學讓你輕鬆體驗 Vibe Coding</b><span class="ch">PAPAYA 電腦教室（中文）</span><br><span class="why">中文、從安裝一路帶</span></div></div>
+    <div class="vid" data-id="eMZmDH3T2bY" data-len="14:44"><div class="meta"><b>Claude Code Tutorial for Beginners</b><span class="ch">Kevin Stratvert（英文）</span><br><span class="why">節奏快、畫面清楚</span></div></div>
+    <div class="vid" data-id="7XzjQa8z0uc" data-len="17:11"><div class="meta"><b>How to Use OpenAI Codex</b><span class="ch">Kevin Stratvert（英文）</span><br><span class="why">選 Codex 的看這支</span></div></div>
+  </div>
+  <div class="done" data-key="start"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>把網頁截圖存起來 📸，然後讀第 5 章，學會讓 AI「先說計畫」。</div></div>
+</section>
+
+<!-- ============ 5 PLAN ============ -->
+<section id="plan">
+  <h2><span class="chip">05</span>Plan Mode：先想清楚，再動手</h2>
+  <div class="meta"><span>⏱ 約 6 分鐘</span><span>✍️ 試一次</span></div>
+  <div class="tldr"><b>一句話重點</b>改大東西之前，先讓 AI 只看不改、寫出計畫給你確認。Claude Code 按 <kbd style="color:var(--ink)">Shift</kbd>+<kbd style="color:var(--ink)">Tab</kbd>，Codex 輸入 <code style="color:var(--ink)">/plan</code>。</div>
+  <p class="lead">Plan Mode（規劃模式）就是請 AI <mark>「先別急著改檔案，先跟我說你打算怎麼做」</mark>。</p>
+  <p>平常 AI 收到指令會直接動手。但如果需求比較大、或你自己也還沒想清楚，它可能會往你沒想到的方向衝。Plan Mode 讓 AI 先讀資料、問你問題、寫出計畫，<b>等你點頭才開始改</b>。</p>
+
+  <figure class="illus">
+    <svg viewBox="0 0 720 210" role="img" aria-label="Plan Mode 流程：提出需求、AI 了解與提問、提出計畫、你批准、開始動手">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <rect x="8" y="20" width="700" height="130" rx="20" fill="#f3eefb" stroke="#6b55a8" stroke-width="2" stroke-dasharray="7 6"/>
+        <text x="22" y="44" font-size="15" fill="#6b55a8" font-weight="700">⏸ Plan Mode：這個區域內 AI 只看、只問、只寫計畫，不改任何檔案</text>
+        <g>
+          <rect x="24" y="62" width="130" height="72" rx="14" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="89" y="94" text-anchor="middle" font-size="26">🙋</text><text x="89" y="122" text-anchor="middle" font-size="15">你提出需求</text>
+          <rect x="196" y="62" width="130" height="72" rx="14" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="261" y="94" text-anchor="middle" font-size="26">🔍</text><text x="261" y="122" text-anchor="middle" font-size="15">AI 了解、提問</text>
+          <rect x="368" y="62" width="130" height="72" rx="14" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="433" y="94" text-anchor="middle" font-size="26">📋</text><text x="433" y="122" text-anchor="middle" font-size="15">AI 寫出計畫</text>
+          <rect x="540" y="62" width="150" height="72" rx="14" fill="#ddd3f0" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="615" y="94" text-anchor="middle" font-size="26">👀</text><text x="615" y="122" text-anchor="middle" font-size="15">你看計畫、修改</text>
+        </g>
+        <g stroke="#d9783b" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M156 98 h36"/><path d="M184 91 l8 7 l-8 7"/>
+          <path d="M328 98 h36"/><path d="M356 91 l8 7 l-8 7"/>
+          <path d="M500 98 h36"/><path d="M528 91 l8 7 l-8 7"/>
+          <path d="M615 136 v30 h-80"/><path d="M543 159 l-9 7 l9 7"/>
+        </g>
+        <text x="610" y="185" text-anchor="end" font-size="15" fill="#2f8a63" font-weight="700">✅ 你批准</text>
+        <rect x="290" y="160" width="230" height="44" rx="22" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="405" y="189" text-anchor="middle" font-size="17" font-weight="700">🔨 AI 這時才開始動手</text>
+      </g>
+    </svg>
+    <figcaption>先畫藍圖、再蓋房子</figcaption>
+  </figure>
+
+  <h3>為什麼新手特別需要它？</h3>
+  <div class="grid3">
+    <div class="card"><b>🧭 不會迷路</b><br>你會先看到 AI 打算做哪幾步，心裡有底</div>
+    <div class="card"><b>🗣️ AI 會反問你</b><br>「要放照片嗎？」「要深色還淺色？」——幫你把模糊的想法說清楚</div>
+    <div class="card"><b>🛟 少走冤枉路</b><br>方向錯了在計畫階段就能改，不用等它寫完一大堆再重來</div>
+  </div>
+
+  <h3>怎麼打開？</h3>
+  <div class="grid2">
+    <div class="card"><b style="font-family:var(--hand);font-size:20px">🟠 Claude Code</b>
+      <p>在輸入框按 <kbd>Shift</kbd>+<kbd>Tab</kbd>，切換到畫面顯示 <code>⏸ plan mode on</code> 為止。桌面 App 也可以在輸入框旁的模式選單切換。</p></div>
+    <div class="card"><b style="font-family:var(--hand);font-size:20px">🟢 Codex</b>
+      <p>在輸入框輸入 <code>/plan</code> 開啟規劃模式，再描述你的需求。</p></div>
+  </div>
+
+  <div class="term"><div class="bar"><i style="background:#ff6b5e"></i><i style="background:#ffbd2e"></i><i style="background:#28c840"></i><span>Plan Mode 對話範例</span></div>
+<pre><span class="b">&gt;</span> <span class="u">我想把自我介紹頁改成作品集，放我的 6 張插畫</span>
+
+<span class="y">AI：</span>開始之前想確認幾件事：
+  1. 點插畫時要放大顯示嗎？
+  2. 每張要附標題和說明文字嗎？
+  3. 原本的「今日小語」按鈕要保留嗎？
+
+<span class="b">&gt;</span> <span class="u">要放大、要標題、按鈕保留</span>
+
+<span class="y">AI：</span><span class="box">📋 計畫
+  1. 新增「作品集」區塊，3 欄排版（手機 1 欄）
+  2. 建立 images/ 資料夾放 6 張插畫
+  3. 點圖片時全螢幕放大，可左右切換
+  4. 保留原本的自我介紹與今日小語
+  要照這個計畫開始嗎？</span>
+<span class="c">⏸ plan mode on</span>                 <span class="p">[ ✓ 批准並開始 ]</span>  <span class="c">[ 繼續修改 ]</span></pre></div>
+
+  <div class="note try"><b class="t">試試看</b>就算沒有切換模式，你也可以在指令最後加一句「<b>先不要動手，先告訴我你的計畫</b>」——效果很接近。養成習慣，會少很多「欸怎麼變成這樣」的時刻。</div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="xJQuF02NAK8" data-len="3:12"><div class="meta"><b>The Explore → Plan → Code → Commit workflow</b><span class="ch">Claude 官方（英文）</span><br><span class="why">3 分鐘看懂「先規劃」</span></div></div>
+  </div>
+  <div class="done" data-key="plan"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>打開 Plan Mode，請 AI 規劃「在網頁加一個作品區」，看完計畫再按批准。</div></div>
+</section>
+
+
+<!-- ============ 6 SKILLS ============ -->
+<section id="skills">
+  <h2><span class="chip">06</span>Skills：給 AI 的技能包</h2>
+  <div class="meta"><span>⏱ 約 10 分鐘</span><span>🎨 設計師必看</span></div>
+  <div class="tldr"><b>一句話重點</b>Skill 是一份「教 AI 怎麼做某件事」的說明書。裝上之後，AI 就會照著專家的做法工作——例如做出更有設計感的介面。</div>
+
+  <h3>Skill 是什麼？</h3>
+  <p>想像 AI 是一位很聰明、但剛到職的新同事。Skill 就是你交給它的<mark>「工作手冊」</mark>：遇到某種任務時，該照什麼步驟、注意什麼、做出什麼品質。</p>
+  <figure class="illus">
+    <svg viewBox="0 0 720 230" role="img" aria-label="AI 背著裝有不同技能卡的背包">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <rect x="40" y="70" width="110" height="90" rx="22" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="75" cy="108" r="8" fill="#fff" stroke="#3b3226" stroke-width="2"/><circle cx="115" cy="108" r="8" fill="#fff" stroke="#3b3226" stroke-width="2"/>
+        <circle cx="76" cy="109" r="3" fill="#3b3226"/><circle cx="116" cy="109" r="3" fill="#3b3226"/>
+        <path d="M80 132 q15 10 30 0" fill="none" stroke="#3b3226" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="95" y1="70" x2="95" y2="50" stroke="#3b3226" stroke-width="2.5"/><circle cx="95" cy="45" r="7" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="95" y="190" text-anchor="middle" font-size="16">AI</text>
+        <path d="M165 115 h55" stroke="#d9783b" stroke-width="3" stroke-dasharray="5 5"/>
+        <text x="192" y="140" text-anchor="middle" font-size="12" fill="#d9783b">需要時翻開</text>
+        <g>
+          <rect x="230" y="30" width="140" height="80" rx="12" fill="#fdf1e6" stroke="#3b3226" stroke-width="2.5" transform="rotate(-4 300 70)"/>
+          <text x="300" y="62" text-anchor="middle" font-size="15" font-weight="700">🎨 前端設計</text><text x="300" y="86" text-anchor="middle" font-size="12">配色、字體、版面規則</text>
+          <rect x="390" y="30" width="140" height="80" rx="12" fill="#eef8f2" stroke="#3b3226" stroke-width="2.5" transform="rotate(3 460 70)"/>
+          <text x="460" y="62" text-anchor="middle" font-size="15" font-weight="700">🖼️ Figma</text><text x="460" y="86" text-anchor="middle" font-size="12">設計稿 ⇄ 網頁</text>
+          <rect x="550" y="30" width="140" height="80" rx="12" fill="#f3eefb" stroke="#3b3226" stroke-width="2.5" transform="rotate(-2 620 70)"/>
+          <text x="620" y="62" text-anchor="middle" font-size="15" font-weight="700">📊 簡報</text><text x="620" y="86" text-anchor="middle" font-size="12">做出 PPT 檔</text>
+          <rect x="300" y="128" width="380" height="80" rx="12" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+          <text x="318" y="152" font-size="14" font-family="JetBrains Mono, monospace">📁 frontend-design/</text>
+          <text x="340" y="176" font-size="13" font-family="JetBrains Mono, monospace">📄 SKILL.md  ← 說明書本體</text>
+          <text x="340" y="198" font-size="13" font-family="JetBrains Mono, monospace">📁 examples/ ← 範例、素材（可選）</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>一個 Skill 就是一個資料夾，裡面最重要的是 SKILL.md 這份說明書</figcaption>
+  </figure>
+
+  <ol class="steps">
+    <li><b class="h">自動觸發</b>你說「幫我設計一個登入畫面」，AI 發現有相關 skill，就會自己翻開來照做。</li>
+    <li><b class="h">手動呼叫</b>Claude Code 輸入 <code>/skill名稱</code>；Codex 輸入 <code>$skill名稱</code> 或 <code>/skills</code> 看清單。</li>
+    <li><b class="h">兩邊通用</b>Skills 遵循開放標準「Agent Skills」，同一份 SKILL.md 在 Claude Code 和 Codex 都能用。</li>
+  </ol>
+
+  <h3>UI/UX 與產品設計師常用的 5 個 Skills</h3>
+  <div class="card skill"><div class="ic" style="background:#fdf1e6">🎨</div><div><b>frontend-design</b> <span class="src">Anthropic 官方 · anthropics/skills</span><br>讓 AI 做出有設計感、不像「AI 模板」的網頁：先定美學方向，再挑字體、配色、動態細節。</div></div>
+  <div class="card skill"><div class="ic" style="background:#eef3fa">🧠</div><div><b>ui-ux-pro-max</b> <span class="src">社群熱門 · nextlevelbuilder/ui-ux-pro-max-skill</span><br>一本 UI/UX 百科：數十種設計風格、上百組配色與字體搭配、UX 準則。適合「我想要 XX 風格」時用。</div></div>
+  <div class="card skill"><div class="ic" style="background:#eef8f2">🖼️</div><div><b>Figma skills</b> <span class="src">Figma 官方外掛 · openai/skills 也有收錄</span><br>把 Figma 設計稿直接轉成網頁（figma-implement-design），或反過來把網頁畫回 Figma、建立設計系統元件庫。</div></div>
+  <div class="card skill"><div class="ic" style="background:#f3eefb">🎭</div><div><b>theme-factory／brand-guidelines</b> <span class="src">Anthropic 官方 · anthropics/skills</span><br>一鍵套用整套主題配色與字體，或讓 AI 照你的品牌規範產出簡報、頁面。</div></div>
+  <div class="card skill"><div class="ic" style="background:#fbeeee">🧩</div><div><b>i-have-adhd</b> <span class="src">社群熱門 · ayghri/i-have-adhd</span><br>不是設計 skill，但很實用：讓 AI 的回答「先講下一步、條列、標時間、少廢話」。<b>這份筆記的版面就是照這個原則設計的</b>——每章有重點、時間、完成按鈕和下一步。</div></div>
+
+  <details><summary>🗂️ 之後可以再看的（點我展開）</summary>
+    <ul>
+      <li><b>canvas-design</b>（Anthropic）：做海報、視覺設計圖</li>
+      <li><b>web-artifacts-builder</b>（Anthropic）：做比較複雜的互動式網頁元件</li>
+      <li><b>playwright／screenshot</b>（openai/skills）：讓 AI 自己開瀏覽器截圖，檢查畫面有沒有跑版</li>
+      <li><b>skill-creator</b>（兩邊都有）：請 AI 幫你把自己的工作流程寫成一個 skill</li>
+    </ul>
+  </details>
+
+  <h3>怎麼安裝？最簡單的方法：叫 AI 裝</h3>
+  <div class="chat"><div class="bub me"><span class="who">你</span>請幫我安裝這個 skill：https://github.com/anthropics/skills 裡的 frontend-design。裝好之後告訴我怎麼確認它有生效。</div>
+  <div class="bub ai"><span class="who">AI</span>✅ 已安裝 frontend-design。之後你請我做網頁時，我會自動套用它；也可以輸入 <code>/frontend-design</code> 直接呼叫。</div></div>
+  <div class="note warn"><b class="t">只裝信任來源的 skill</b>Skill 是給 AI 的指令，來路不明的 skill 可能讓 AI 做你不想要的事。優先選官方（Anthropic、OpenAI、Figma）或星星數很多的熱門專案，不確定就先請 AI 讀過一遍、告訴你它會做什麼。</div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="bjdBVZa66oU" data-len="2:54"><div class="meta"><b>What are skills?</b><span class="ch">Claude 官方（英文）</span><br><span class="why">3 分鐘看懂 Skill</span></div></div>
+    <div class="vid" data-id="DNF0FJ9l7wo" data-len="15:18"><div class="meta"><b>Agent Skills（Claude Skills）詳細攻略</b><span class="ch">技术爬爬虾 TechShrimp（中文，簡體字幕）</span><br><span class="why">中文、實際操作</span></div></div>
+  </div>
+
+  <div class="done" data-key="skills"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>請 AI 安裝 frontend-design，然後說「用這個 skill 重新設計我的自我介紹頁」，比較前後差別。</div></div>
+</section>
+
+<!-- ============ 7 GITHUB ============ -->
+<section id="github">
+  <h2><span class="chip">07</span>GitHub：存檔、時光機、免費上線</h2>
+  <div class="meta"><span>⏱ 約 25 分鐘</span><span>✍️ 要動手</span><span>🏆 完成後你會有公開網址</span></div>
+  <div class="tldr"><b>一句話重點</b>GitHub = 雲端存檔＋版本時光機＋免費網站空間。註冊帳號後，上傳和上線都可以請 AI 幫你做。</div>
+  <p class="lead">GitHub 是一個放程式檔案的網站。對你來說，它有三個超實用的功能：</p>
+
+  <figure class="illus">
+    <svg viewBox="0 0 720 220" role="img" aria-label="GitHub 的三個功能：雲端備份、版本時光機、免費上線">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <rect x="15" y="15" width="220" height="190" rx="18" fill="#eef3fa" stroke="#3b3226" stroke-width="2.5"/>
+        <path d="M80 95 a26 26 0 0 1 48 -14 a22 22 0 0 1 38 16 a18 18 0 0 1 -4 36 h-78 a20 20 0 0 1 -4 -38z" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="125" y="122" text-anchor="middle" font-size="20">📁</text>
+        <text x="125" y="165" text-anchor="middle" font-size="19" font-weight="700">☁️ 雲端備份</text>
+        <text x="125" y="188" text-anchor="middle" font-size="14">電腦壞了，作品還在</text>
+
+        <rect x="250" y="15" width="220" height="190" rx="18" fill="#fdf1e6" stroke="#3b3226" stroke-width="2.5"/>
+        <line x1="275" y1="95" x2="445" y2="95" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="285" cy="95" r="9" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="330" cy="95" r="9" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="375" cy="95" r="9" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/>
+        <circle cx="425" cy="95" r="11" fill="#d9783b" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="285" y="74" text-anchor="middle" font-size="11">第1版</text><text x="330" y="74" text-anchor="middle" font-size="11">加按鈕</text><text x="375" y="74" text-anchor="middle" font-size="11">換顏色</text><text x="425" y="72" text-anchor="middle" font-size="11">現在</text>
+        <path d="M418 120 q-45 22 -88 2" fill="none" stroke="#6b55a8" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M338 116 l-9 6 l10 4" fill="none" stroke="#6b55a8" stroke-width="2.5"/>
+        <text x="360" y="165" text-anchor="middle" font-size="19" font-weight="700">⏪ 版本時光機</text>
+        <text x="360" y="188" text-anchor="middle" font-size="14">改壞了，隨時回到之前的版本</text>
+
+        <rect x="485" y="15" width="220" height="190" rx="18" fill="#eef8f2" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="530" y="45" width="130" height="85" rx="10" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="530" y="45" width="130" height="16" rx="8" fill="#f4ecdc" stroke="#3b3226" stroke-width="2"/>
+        <text x="595" y="57" text-anchor="middle" font-size="9" font-family="JetBrains Mono, monospace">你的名字.github.io</text>
+        <text x="595" y="105" text-anchor="middle" font-size="28">🌏</text>
+        <text x="595" y="165" text-anchor="middle" font-size="19" font-weight="700">🚀 免費上線</text>
+        <text x="595" y="188" text-anchor="middle" font-size="14">得到網址，誰都能打開</text>
+      </g>
+    </svg>
+  </figure>
+
+  <h3>只要認識這幾個詞</h3>
+  <div class="gloss">
+    <div><span class="w">Repository</span> <span class="zh">倉庫／專案</span><p>簡稱 repo。就是放在 GitHub 上的一個專案資料夾。</p></div>
+    <div><span class="w">Commit</span> <span class="zh">存檔點</span><p>像遊戲的「存檔」。每次改到滿意，就存一個點，附上一句說明。</p></div>
+    <div><span class="w">Push</span> <span class="zh">上傳</span><p>把電腦裡的存檔點，推上 GitHub 雲端。</p></div>
+    <div><span class="w">Pull</span> <span class="zh">下載</span><p>把 GitHub 上最新的版本拉回電腦。</p></div>
+    <div><span class="w">Git</span> <span class="zh">記錄工具</span><p>在你電腦上負責記錄版本的小程式。GitHub 是放這些記錄的網站。</p></div>
+    <div><span class="w">GitHub Pages</span> <span class="zh">免費網站空間</span><p>把 repo 裡的網頁直接變成一個公開網址。</p></div>
+  </div>
+
+  <figure class="illus" style="margin-top:28px">
+    <svg viewBox="0 0 720 170" role="img" aria-label="從電腦到網址的流程：存檔、上傳、GitHub、上線">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226">
+        <rect x="10" y="40" width="140" height="84" rx="14" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="80" y="78" text-anchor="middle" font-size="28">💻</text><text x="80" y="108" text-anchor="middle" font-size="15">你的電腦</text>
+        <rect x="200" y="40" width="140" height="84" rx="14" fill="#fdf1e6" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="270" y="78" text-anchor="middle" font-size="28">💾</text><text x="270" y="108" text-anchor="middle" font-size="15">Commit 存檔</text>
+        <rect x="390" y="40" width="140" height="84" rx="14" fill="#eef3fa" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="460" y="78" text-anchor="middle" font-size="28">🐙</text><text x="460" y="108" text-anchor="middle" font-size="15">GitHub</text>
+        <rect x="580" y="40" width="130" height="84" rx="14" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="645" y="78" text-anchor="middle" font-size="28">🌏</text><text x="645" y="108" text-anchor="middle" font-size="15">公開網址</text>
+        <g stroke="#d9783b" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M152 82 h44"/><path d="M188 75 l8 7 l-8 7"/>
+          <path d="M342 82 h44"/><path d="M378 75 l8 7 l-8 7"/>
+          <path d="M532 82 h44"/><path d="M568 75 l8 7 l-8 7"/>
+        </g>
+        <text x="174" y="30" text-anchor="middle" font-size="13" fill="#6d604e">改到滿意</text>
+        <text x="364" y="30" text-anchor="middle" font-size="13" fill="#6d604e">Push 上傳</text>
+        <text x="554" y="30" text-anchor="middle" font-size="13" fill="#6d604e">開 Pages</text>
+        <text x="360" y="158" text-anchor="middle" font-size="15" fill="#6d604e">好消息：中間這些步驟，都可以請 AI 幫你做 ✨</text>
+      </g>
+    </svg>
+  </figure>
+
+  <h3>把你的網頁放上網（逐步）</h3>
+  <ol class="steps">
+    <li><b class="h">註冊 GitHub 帳號</b>到 <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> 註冊。<br><span style="font-size:15px;color:var(--ink2)">使用者名稱會出現在網址裡（例如 <code>xiaoan.github.io</code>），取一個你喜歡的、簡短的英文名字。</span></li>
+    <li><b class="h">讓 AI 幫你連上 GitHub</b>對 AI 說：
+      <div class="chat" style="margin:10px 0"><div class="bub me"><span class="who">你</span>我是 Git 和 GitHub 新手。請幫我把這個資料夾上傳到 GitHub，建立一個叫 my-first-site 的公開 repo。每一步都用簡單的話告訴我你在做什麼，需要我操作的時候請停下來教我。</div></div>
+      <span style="font-size:15px;color:var(--ink2)">第一次會需要登入 GitHub 授權，AI 會帶你完成（通常是跳出瀏覽器，點「授權」）。</span></li>
+    <li><b class="h">打開 GitHub Pages</b>可以請 AI 幫你開，或自己到 GitHub 網頁操作：
+      <figure style="margin:14px 0">
+        <div class="browser">
+          <div class="bar"><i></i><i></i><i></i><span class="url">github.com/你的名字/my-first-site/settings/pages</span></div>
+          <div style="display:grid;grid-template-columns:150px 1fr;font-size:14px;min-height:190px">
+            <div style="border-right:1.5px solid var(--line);padding:12px;background:#faf8f4;line-height:2">
+              <div>⚙️ General</div><div>👥 Collaborators</div><div>🌿 Branches</div>
+              <div style="background:#fff;border:2px solid var(--apricot-d);border-radius:8px;padding:0 6px;font-weight:700">📄 Pages ←</div>
+            </div>
+            <div style="padding:14px 18px">
+              <div style="font-weight:700;font-size:17px">GitHub Pages</div>
+              <div style="margin-top:10px;color:var(--ink2)">Build and deployment › Source</div>
+              <div style="margin:4px 0 10px;border:1.5px solid var(--line);border-radius:6px;padding:2px 10px;display:inline-block">Deploy from a branch ▾</div>
+              <div style="color:var(--ink2)">Branch</div>
+              <div style="display:flex;gap:8px;margin-top:4px">
+                <span style="border:2px solid var(--apricot-d);border-radius:6px;padding:2px 10px;background:#fdf1e6">🌿 main ▾</span>
+                <span style="border:1.5px solid var(--line);border-radius:6px;padding:2px 10px">/ (root) ▾</span>
+                <span style="background:var(--mint-d);color:#fff;border-radius:6px;padding:2px 12px">Save</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Settings → Pages → Branch 選 main → Save</figcaption>
+      </figure></li>
+    <li><b class="h">等 1–2 分鐘，拿到網址 🎉</b>頁面上方會出現 <code>https://你的名字.github.io/my-first-site/</code>，打開就是你的網站，手機也能看，傳給朋友吧！</li>
+    <li><b class="h">之後每次更新</b>改完後跟 AI 說：「<b>幫我 commit 並 push，說明寫『加入作品集』</b>」。等一兩分鐘，網址上的內容就會更新。</li>
+  </ol>
+
+  <div class="note warn"><b class="t">公開 repo 誰都看得到</b>不要把密碼、身分證字號、住址、私人照片、API 金鑰放進去。不確定能不能放的東西，先問 AI：「這個資料夾裡有沒有不適合公開的東西？」</div>
+
+  <h3>📺 推薦影片</h3>
+  <div class="vids">
+    <div class="vid" data-id="atqcAb7MFAM" data-len="19:16"><div class="meta"><b>給非技術人員的 Github 教學，Vibe Coding 必學的基礎技能</b><span class="ch">Gary Chen（中文）</span><br><span class="why">最對味：專為非技術人員</span></div></div>
+    <div class="vid" data-id="gUFHwJ1y80g" data-len="7:24"><div class="meta"><b>GitHub Pages 怎麼免費架網站？從檔案到網址的 3 個步驟</b><span class="ch">六角學院（中文）</span><br><span class="why">7 分鐘學會上線</span></div></div>
+    <div class="vid" data-id="FKXRiAiQFiY" data-len="15:51"><div class="meta"><b>Git 和 GitHub 零基礎快速上手</b><span class="ch">PAPAYA 電腦教室（中文）</span><br><span class="why">想多懂一點再看</span></div></div>
+  </div>
+  <div class="done" data-key="github"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>把你的網址傳給一個朋友 🎉</div></div>
+</section>
+
+<!-- ============ 8 FAQ ============ -->
+<section id="faq">
+  <h2><span class="chip">08</span>卡關了怎麼辦 & 下一步</h2>
+  <div class="meta"><span>⏱ 約 5 分鐘</span><span>🔖 卡住時再回來看</span></div>
+  <div class="tldr"><b>一句話重點</b>看不懂的錯誤 → 整段貼給 AI。改壞了 → 請 AI 回到上一個 commit。</div>
+
+  <details open><summary>🔴 出現一大串看不懂的紅字錯誤</summary>
+    <p>完全正常！<b>把錯誤訊息整段複製，貼給 AI</b>，加一句「我看不懂，請用簡單的話解釋並幫我修好」。90% 的問題這樣就解決了。也可以直接截圖貼給它。</p></details>
+  <details><summary>🌀 AI 改了半天越改越亂</summary>
+    <p>這時候 GitHub 的「時光機」就派上用場：跟 AI 說「<b>幫我回到上一次 commit 的版本</b>」。然後開 Plan Mode，重新把需求說清楚一次。</p></details>
+  <details><summary>💬 對話太長，AI 好像忘記前面說過的事</summary>
+    <p>開一個新的對話，簡單交代：「這是一個自我介紹網頁，檔案是 index.html，我現在想要……」。乾淨的開始常常比硬撐有效。</p></details>
+  <details><summary>🌐 push 了，但網址上還是舊的</summary>
+    <p>等 1–2 分鐘，然後強制重新整理（Mac <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>／Windows <kbd>Ctrl</kbd>+<kbd>F5</kbd>）。還是不行就問 AI：「幫我檢查 GitHub Pages 部署狀態」。</p></details>
+  <details><summary>🤖 AI 要我同意執行某個指令，我該按嗎？</summary>
+    <p>看不懂就先問：「<b>這個指令會做什麼？安全嗎？</b>」。一般的建立檔案、安裝套件通常沒問題；如果它說要刪除東西，先確認是不是你要的。</p></details>
+
+  <h3>✍️ 練習清單</h3>
+  <div class="grid2">
+    <div><b style="font-family:var(--hand);font-size:19px">先做這 3 個（必做）</b>
+    <ul class="check">
+      <li>做出自我介紹網頁，並在瀏覽器打開（30 分鐘）</li>
+      <li>用 Plan Mode 規劃一次修改，看過計畫再批准（10 分鐘）</li>
+      <li>上傳到 GitHub、打開 Pages，拿到網址（25 分鐘）</li>
+    </ul></div>
+    <div><b style="font-family:var(--hand);font-size:19px">之後挑一個（選做）</b>
+    <ul class="check">
+      <li>「生日倒數」頁面，送給朋友（20 分鐘）</li>
+      <li>小遊戲：翻牌配對或猜數字（40 分鐘）</li>
+      <li>實用工具：旅行行程表或待辦清單（40 分鐘）</li>
+    </ul></div>
+  </div>
+
+  <h3>延伸資源</h3>
+  <div class="grid2">
+    <div class="card"><b>🎓 Claude Code 官方免費課程</b><br><a href="https://academy.claude.com/courses/claude-code-101" target="_blank" rel="noopener">Claude Code 101（Claude Academy）</a></div>
+    <div class="card"><b>📚 Codex 官方文件</b><br><a href="https://learn.chatgpt.com/docs" target="_blank" rel="noopener">learn.chatgpt.com/docs</a></div>
+    <div class="card"><b>🐙 GitHub 官方入門</b><br><a href="https://docs.github.com/zh/get-started" target="_blank" rel="noopener">GitHub Docs：開始使用</a></div>
+    <div class="card"><b>🌏 GitHub Pages 說明</b><br><a href="https://docs.github.com/zh/pages" target="_blank" rel="noopener">GitHub Docs：Pages</a></div>
+  </div>
+
+  <div class="card" style="text-align:center;background:#fdf6ee;margin-top:32px">
+    <div style="font-size:36px">🌱</div>
+    <p style="font-family:var(--hand);font-size:22px;margin:6px 0">最重要的一件事：<mark>先做一個很小、很醜、但能動的東西。</mark></p>
+    <p style="color:var(--ink2)">之後每一次「再改一點點」，都是在學習。</p>
+  </div>
+  <div class="done" data-key="faq"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>從練習清單挑一個，今天花 20 分鐘做出來。</div></div>
+
+  <footer>資訊整理於 2026 年 10 月。AI 工具更新很快，價格與功能請以官方網站為準。影片版權屬原作者所有。</footer>
+</section>
+</main>
+</div>
+
+<script>
+// YouTube 影片：先顯示縮圖，點擊才載入播放器
+document.querySelectorAll('.vid').forEach(v => {
+  const id = v.dataset.id;
+  const btn = document.createElement('button');
+  btn.className = 'th'; btn.type = 'button';
+  btn.style.backgroundImage = `url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
+  btn.setAttribute('aria-label', '播放影片');
+  btn.innerHTML = `<span></span><em>${v.dataset.len || ''}</em>`;
+  btn.onclick = () => {
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
+    btn.replaceWith(f);
+  };
+  v.prepend(btn);
+  const a = document.createElement('a');
+  a.href = `https://www.youtube.com/watch?v=${id}`; a.target = '_blank'; a.rel = 'noopener';
+  a.textContent = '在 YouTube 開啟 ↗';
+  v.querySelector('.meta').append(document.createElement('br'), a);
+});
+
+// 複製按鈕
+document.querySelectorAll('.copy').forEach(c => {
+  const b = c.querySelector('button');
+  b.onclick = () => {
+    const cmds = [...c.querySelectorAll('.u')].map(e => e.textContent).join('\n');
+    navigator.clipboard.writeText(cmds).then(() => { b.textContent = '已複製 ✓'; setTimeout(() => b.textContent = '複製', 1500); });
+  };
+});
+
+// 目錄高亮 + 閱讀進度
+const links = [...document.querySelectorAll('#toc a')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+const bar = document.getElementById('progress');
+function onScroll() {
+  const y = scrollY + innerHeight * 0.3;
+  let i = 0; secs.forEach((s, k) => { if (s.offsetTop <= y) i = k; });
+  links.forEach((a, k) => a.classList.toggle('on', k === i));
+  const h = document.documentElement.scrollHeight - innerHeight;
+  bar.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+}
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+// 完成進度（存在瀏覽器裡）
+const KEY = 'vibe-guide-done';
+const doneSet = new Set(JSON.parse(localStorage.getItem(KEY) || '[]'));
+function paintDone() {
+  document.querySelectorAll('.done').forEach(d => {
+    const ok = doneSet.has(d.dataset.key);
+    d.classList.toggle('ok', ok);
+    d.querySelector('button').textContent = ok ? '✓ 已完成' : '✓ 我讀完了';
+  });
+  links.forEach(a => a.classList.toggle('fin', doneSet.has(a.getAttribute('href').slice(1))));
+  const n = [...doneSet].filter(k => k !== 'hello').length;
+  document.getElementById('cnum').textContent = n;
+  document.getElementById('cbar').style.width = (n / 8 * 100) + '%';
+}
+document.querySelectorAll('.done button').forEach(b => b.onclick = () => {
+  const k = b.parentElement.dataset.key;
+  doneSet.has(k) ? doneSet.delete(k) : doneSet.add(k);
+  localStorage.setItem(KEY, JSON.stringify([...doneSet]));
+  paintDone();
+});
+paintDone();
+</script>
+</body>
+</html>
