@@ -162,7 +162,7 @@ nav.toc a.fin .n i{display:none}
 .count{font-family:var(--hand);font-size:15px;margin:0 0 14px;padding:6px 12px;border-radius:10px;background:#fff;border:1.5px solid var(--line)}
 .count .bar2{height:8px;border-radius:99px;background:var(--paper2);margin-top:4px;overflow:hidden}
 .count .bar2 i{display:block;height:100%;background:var(--mint-d);width:0;transition:.4s}
-.map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.map{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px}
 .map a{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--line);font-size:14px;line-height:1.5}
 .map a b{display:block;font-family:var(--hand);font-size:17px}
 .map a em{font-style:normal;color:var(--apricot-d);font-family:var(--mono);font-size:12.5px}
@@ -172,6 +172,30 @@ nav.toc a.fin .n i{display:none}
 .skill .ic{width:56px;height:56px;border-radius:14px;border:2px solid var(--ink);display:grid;place-items:center;font-size:26px}
 .skill b{font-family:var(--hand);font-size:19px}
 .skill .src{font-size:12.5px;color:var(--ink2);font-family:var(--mono)}
+.prompt{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--line);margin:14px 0;overflow:hidden}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;background:var(--paper2);border-bottom:2px solid var(--ink);padding:6px 12px;font-family:var(--hand);font-size:15px}
+.prompt .ph button{font-family:var(--mono);font-size:13px;background:var(--ink);color:var(--paper);border:0;border-radius:8px;padding:3px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:14px 16px;font-family:var(--mono);font-size:13.5px;line-height:1.7;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.stage{display:grid;grid-template-columns:44px 1fr;gap:14px;margin:26px 0 8px;align-items:start}
+.stage .sn{width:44px;height:44px;border-radius:12px;background:var(--lav);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--hand);font-weight:700;font-size:20px}
+.stage h4{font-family:var(--hand);font-size:21px;margin:0}
+.stage .why2{font-size:15px;color:var(--ink2);margin:2px 0 0}
+.gd{border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:#fff;box-shadow:5px 5px 0 var(--line);font-size:13.5px}
+.gd .top{display:grid;grid-template-columns:1fr 1fr 1fr;background:#24292f;color:#fff}
+.gd .top div{padding:8px 12px;border-right:1px solid #444;line-height:1.35}
+.gd .top small{display:block;color:#9aa4ae;font-size:11px}
+.gd .body{display:grid;grid-template-columns:230px 1fr;min-height:250px}
+.gd .side{border-right:1.5px solid var(--line);display:flex;flex-direction:column}
+.gd .tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid var(--line);text-align:center}
+.gd .tabs span{padding:6px}.gd .tabs span:first-child{border-bottom:3px solid #fd8c73;font-weight:700}
+.gd .file{padding:5px 10px;border-bottom:1px solid #f0ebe0}.gd .file i{float:right;font-style:normal;color:#d29922}
+.gd .commit{margin-top:auto;padding:10px;border-top:1.5px solid var(--line);background:#faf8f4}
+.gd .commit .in{border:1.5px solid var(--line);border-radius:6px;padding:3px 8px;background:#fff;margin-bottom:6px}
+.gd .commit .btn{background:#2da44e;color:#fff;border-radius:6px;padding:5px;text-align:center;font-weight:700}
+.gd .diff{font-family:var(--mono);font-size:12.5px;line-height:1.8}
+.gd .diff div{padding:0 12px}.gd .diff .add{background:#e6ffec}.gd .diff .del{background:#ffebe9}.gd .diff .hd{background:#f6f8fa;color:#57606a;border-bottom:1px solid var(--line)}
+.cn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--apricot-d);color:#fff;font-family:var(--hand);font-weight:700;font-size:12px;margin-right:6px;vertical-align:middle;box-shadow:0 0 0 2px #fff}
+.callout-num{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--apricot-d);color:#fff;font-family:var(--hand);font-weight:700;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 0 0 2px var(--ink)}
 footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-size:14px;color:var(--ink2)}
 
 @media (max-width:900px){
@@ -182,6 +206,7 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
   nav.toc .count{display:none}
   .hero,.grid2,.grid3,.promise{grid-template-columns:1fr}
   .map{grid-template-columns:1fr 1fr}
+  .gd .body{grid-template-columns:1fr} .gd .top{grid-template-columns:1fr}
   .tbl{font-size:14px} .tbl td:first-child{white-space:normal}
 }
 </style>
@@ -191,7 +216,7 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
 <div class="wrap">
 <nav class="toc" id="toc">
   <div class="brand">從零開始的<br>Vibe Coding<small>一份給新手的筆記本</small></div>
-  <div class="count" id="count">已完成 <b id="cnum">0</b> / 8 章<div class="bar2"><i id="cbar"></i></div></div>
+  <div class="count" id="count">已完成 <b id="cnum">0</b> / 10 章<div class="bar2"><i id="cbar"></i></div></div>
   <a href="#hello"><span class="n"><i>0</i></span>開始之前</a>
   <a href="#what"><span class="n"><i>1</i></span>什麼是 Vibe Coding</a>
   <a href="#tools"><span class="n"><i>2</i></span>Codex 還是 Claude Code</a>
@@ -199,8 +224,10 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
   <a href="#start"><span class="n"><i>4</i></span>動手做第一個網頁</a>
   <a href="#plan"><span class="n"><i>5</i></span>Plan Mode 先想再做</a>
   <a href="#skills"><span class="n"><i>6</i></span>Skills 技能包</a>
-  <a href="#github"><span class="n"><i>7</i></span>GitHub 與上線</a>
-  <a href="#faq"><span class="n"><i>8</i></span>卡關了怎麼辦</a>
+  <a href="#kit"><span class="n"><i>7</i></span>一鍵安裝 Skills</a>
+  <a href="#case"><span class="n"><i>8</i></span>實戰：作品集網站</a>
+  <a href="#github"><span class="n"><i>9</i></span>Git、GitHub 與上線</a>
+  <a href="#faq"><span class="n"><i>10</i></span>卡關了怎麼辦</a>
 </nav>
 
 <main>
@@ -245,8 +272,9 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
       </svg>
     </figure>
   </div>
-  <div class="tldr"><b>現在就做：</b>先花 5 分鐘讀第 1 章。全部讀完＋做完大約 <b style="color:var(--mint)">2 小時</b>，可以分三天：<br>
-    Day 1 → 第 1–3 章（觀念，約 25 分鐘）　Day 2 → 第 4–6 章（動手，約 50 分鐘）　Day 3 → 第 7–8 章（上線，約 30 分鐘）</div>
+  <div class="tldr"><b>現在就做：</b>先花 5 分鐘讀第 1 章。全部讀完＋做完大約 <b style="color:var(--mint)">3.5 小時</b>，可以分五天：<br>
+    Day 1 → 第 1–3 章（觀念，25 分鐘）　Day 2 → 第 4–6 章（第一個網頁，50 分鐘）　Day 3 → 第 7 章＋第 8 章 Part A（50 分鐘）<br>
+    Day 4 → 第 8 章 Part B（自己的作品集，60 分鐘）　Day 5 → 第 9–10 章（上線，40 分鐘）</div>
   <div class="map">
     <a href="#what"><em>01 · 5 分</em><b>Vibe Coding</b>是什麼</a>
     <a href="#tools"><em>02 · 8 分</em><b>選工具</b>Codex／Claude Code</a>
@@ -254,8 +282,11 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
     <a href="#start"><em>04 · 30 分</em><b>第一個網頁</b>動手做</a>
     <a href="#plan"><em>05 · 6 分</em><b>Plan Mode</b>先想再做</a>
     <a href="#skills"><em>06 · 10 分</em><b>Skills</b>技能包</a>
-    <a href="#github"><em>07 · 25 分</em><b>GitHub</b>免費上線</a>
-    <a href="#faq"><em>08 · 5 分</em><b>卡關</b>怎麼辦</a>
+    <a href="#kit"><em>07 · 10 分</em><b>一鍵安裝</b>實用 Skills</a>
+    <a href="#case"><em>08 · 40＋60 分</em><b>實戰</b>作品集網站</a>
+    <a href="#github"><em>09 · 35 分</em><b>Git／GitHub</b>免費上線</a>
+    <a href="#faq"><em>10 · 5 分</em><b>卡關</b>怎麼辦</a>
+    <a href="#hello" style="background:var(--paper2);box-shadow:none;border-style:dashed"><em>合計</em><b>約 3.5 小時</b>分 5 天讀</a>
   </div>
   <div class="note tip"><b class="t">怎麼讀這份筆記？</b>每章開頭有「一句話重點」，結尾有「✓ 我讀完了」按鈕和下一步。按下去，左邊目錄會打勾、進度會被記住——下次回來直接接著讀。</div>
   <div class="done" data-key="hello"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>往下讀第 1 章（5 分鐘）。</div></div>
@@ -745,7 +776,7 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
     </ul>
   </details>
 
-  <h3>怎麼安裝？最簡單的方法：叫 AI 裝</h3>
+  <h3>怎麼安裝？最簡單的方法：叫 AI 裝（下一章有現成 prompt）</h3>
   <div class="chat"><div class="bub me"><span class="who">你</span>請幫我安裝這個 skill：https://github.com/anthropics/skills 裡的 frontend-design。裝好之後告訴我怎麼確認它有生效。</div>
   <div class="bub ai"><span class="who">AI</span>✅ 已安裝 frontend-design。之後你請我做網頁時，我會自動套用它；也可以輸入 <code>/frontend-design</code> 直接呼叫。</div></div>
   <div class="note warn"><b class="t">只裝信任來源的 skill</b>Skill 是給 AI 的指令，來路不明的 skill 可能讓 AI 做你不想要的事。優先選官方（Anthropic、OpenAI、Figma）或星星數很多的熱門專案，不確定就先請 AI 讀過一遍、告訴你它會做什麼。</div>
@@ -756,15 +787,308 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
     <div class="vid" data-id="DNF0FJ9l7wo" data-len="15:18"><div class="meta"><b>Agent Skills（Claude Skills）詳細攻略</b><span class="ch">技术爬爬虾 TechShrimp（中文，簡體字幕）</span><br><span class="why">中文、實際操作</span></div></div>
   </div>
 
-  <div class="done" data-key="skills"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>請 AI 安裝 frontend-design，然後說「用這個 skill 重新設計我的自我介紹頁」，比較前後差別。</div></div>
+  <div class="done" data-key="skills"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>往下到第 7 章，複製一段 prompt，一次裝好 5 個實用 skills。</div></div>
 </section>
 
-<!-- ============ 7 GITHUB ============ -->
+
+<!-- ============ 7 KIT ============ -->
+<section id="kit">
+  <h2><span class="chip">07</span>一鍵安裝實用 Skills</h2>
+  <div class="meta"><span>⏱ 約 10 分鐘</span><span>📋 複製貼上就好</span></div>
+  <div class="tldr"><b>一句話重點</b>把下面這段英文 prompt 整段複製，貼給 Codex 或 Claude Code。AI 會自己下載、檢查、安裝這 5 個 skills，然後告訴你怎麼用。</div>
+  <div class="note tip"><b class="t">為什麼 prompt 用英文？</b>Skill 的說明書和 GitHub 上的資料幾乎都是英文。用英文下指令，AI 比較不會誤解檔案名稱和路徑。看不懂沒關係，每段下面都有中文說明。</div>
+
+  <ol class="steps">
+    <li><b class="h">打開 App，開一個新對話</b>選任何一個資料夾都可以，skills 會裝在「個人」位置，所有專案都能用。</li>
+    <li><b class="h">按「Copy」，貼上，送出</b>
+      <div class="prompt"><div class="ph"><span>📋 Prompt ① — install 5 skills</span><button type="button">Copy</button></div><pre>Please install these 5 Agent Skills for me, so you can use them in all my projects.
+
+1. frontend-design  — https://github.com/anthropics/skills  (folder: skills/frontend-design)
+2. theme-factory    — https://github.com/anthropics/skills  (folder: skills/theme-factory)
+3. skill-creator    — https://github.com/anthropics/skills  (folder: skills/skill-creator)
+4. ui-ux-pro-max    — https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+5. i-have-adhd      — https://github.com/ayghri/i-have-adhd  (folder: skills/i-have-adhd)
+
+How to do it:
+- First tell me which tool you are (Claude Code or Codex).
+- Install each skill into my personal skills folder:
+  Claude Code → ~/.claude/skills/&lt;skill-name&gt;/
+  Codex       → ~/.agents/skills/&lt;skill-name&gt;/
+- Before installing, read each SKILL.md and tell me in one line
+  what it does and whether it runs any scripts.
+- Only install these 5. Do not install anything else.
+
+When you are done:
+- List the installed skills and how to call each one.
+- Tell me if I need to restart the app.</pre></div>
+      <span style="font-size:15px;color:var(--ink2)">中文意思：請幫我安裝這 5 個 skills。先說你是哪個工具，裝到對的資料夾；安裝前先讀過說明書、告訴我它會做什麼；只裝這 5 個；裝完列出清單和用法。</span></li>
+    <li><b class="h">AI 問你要不要允許時，看清楚再按</b>它會需要下載檔案（用 <code>git clone</code> 或 <code>curl</code>）。只要是從上面這些 GitHub 網址下載，就可以允許。</li>
+    <li><b class="h">重開 App，確認裝好了</b>
+      <div class="prompt"><div class="ph"><span>📋 Prompt ② — check</span><button type="button">Copy</button></div><pre>Which skills do you have installed right now? List each one with a one-line description, and tell me how to call it.</pre></div></li>
+    <li><b class="h">試用一次 🎉</b>
+      <div class="prompt"><div class="ph"><span>📋 Prompt ③ — first try</span><button type="button">Copy</button></div><pre>Use the frontend-design skill to redesign my index.html.
+Keep all my text exactly the same. Only change the visual design.
+Show me your design direction first, before editing any files.</pre></div>
+      <span style="font-size:15px;color:var(--ink2)">中文意思：用 frontend-design 重新設計我的網頁，文字不要動，只改視覺；動手前先給我看設計方向。下一章會用這些 skills 改一個真的作品集。</span></li>
+  </ol>
+
+  <h3>這 5 個裝了能幹嘛？</h3>
+  <table class="tbl">
+    <thead><tr><th>Skill</th><th>一句話</th><th>什麼時候會用到</th></tr></thead>
+    <tbody>
+      <tr><td>frontend-design</td><td>讓網頁有設計感，不像 AI 模板</td><td>做任何網頁時</td></tr>
+      <tr><td>theme-factory</td><td>一次套好整套配色＋字體</td><td>「幫我換成 XX 風格」</td></tr>
+      <tr><td>ui-ux-pro-max</td><td>UI/UX 百科：風格、配色、字體、UX 準則</td><td>還不確定要什麼風格時</td></tr>
+      <tr><td>skill-creator</td><td>幫你把常做的事寫成自己的 skill</td><td>同一件事做第三次的時候</td></tr>
+      <tr><td>i-have-adhd</td><td>AI 回答先講下一步、條列、標時間</td><td>覺得 AI 講太多、抓不到重點時，輸入 <code>/i-have-adhd</code></td></tr>
+    </tbody>
+  </table>
+
+  <details><summary>🖼️ 選做：連接 Figma（設計師推薦）</summary>
+    <p>Figma 需要登入你的帳號授權，步驟會因工具而不同，所以這段 prompt 是請 AI 一步一步帶你做：</p>
+    <div class="prompt"><div class="ph"><span>📋 Prompt ④ — connect Figma</span><button type="button">Copy</button></div><pre>I want to connect Figma so you can read my designs.
+Walk me through installing Figma's official integration for the tool you are,
+one step at a time. Stop and wait for me whenever I need to log in or click something.</pre></div>
+  </details>
+  <div class="note warn"><b class="t">安全提醒</b>這段 prompt 只裝官方（Anthropic）和星星數很高的社群 skills。以後看到別人分享的 skill，也照同樣做法：先請 AI 讀過、說明它會做什麼，再決定要不要裝。</div>
+
+  <div class="done" data-key="kit"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>跑完 Prompt ③，比較一下改版前後的網頁截圖。</div></div>
+</section>
+
+<!-- ============ 8 CASE ============ -->
+<section id="case">
+  <h2><span class="chip">08</span>實戰：作品集網站</h2>
+  <div class="meta"><span>⏱ Part A 約 40 分鐘</span><span>⏱ Part B 約 60 分鐘</span><span>📋 13 段英文 prompt</span><span>🏆 完成後你會有作品集</span></div>
+  <div class="tldr"><b>一句話重點</b>Part A：讓 AI 讀說明書 → 打開本機預覽 → 一次改一件事。Part B：先讓 AI「學」你，再讓它提出 3 個方向給你選，最後寫一份說明書給以後的 AI 看。</div>
+  <p>這一章用一個真實案例：一位 UX 設計師用 AI 做出來的作品集網站（首頁、關於我、每個專案一頁、還有動畫）。分兩部分：<b>Part A</b> 先把這個做好的專案在你電腦上跑起來、動手改；<b>Part B</b> 照它當初的流程，從零做你自己的。</p>
+
+  <h3>Part A｜先玩一個「做好的」作品集（約 40 分鐘）</h3>
+  <p>你會收到一個已經做好的作品集專案（資料夾 zip，或 GitHub 邀請）。<mark>先讓它在你的電腦跑起來、改一個字</mark>，你就會懂整個流程。照著下面 6 段 prompt 依序貼給 AI：</p>
+
+  <div class="stage"><div class="sn">A0</div><div><h4>拿到專案、放到桌面</h4><p class="why2">兩種收到方式都寫在 prompt 裡，留下符合你的那一行就好。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A0 — get the project</span><button type="button">Copy</button></div><pre>I received a website project from a friend.
+[Option 1] It's a zip file in my Downloads folder: unzip it to my Desktop.
+[Option 2] It's a GitHub invite: clone this repository to my Desktop: &lt;paste the repo URL here&gt;
+
+Then open that folder as my working folder, and tell me the folder name
+and the top-level files you see. Do not change anything.</pre></div>
+
+  <div class="stage"><div class="sn">A1</div><div><h4>讓 AI 先讀懂這個專案</h4><p class="why2">這個專案有一份 <code>PORTFOLIO_GUIDE.md</code>——就是寫給 AI 看的說明書（Part B 第 5 步會教你自己寫一份）。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A1 — learn the project</span><button type="button">Copy</button></div><pre>Before doing anything, read README.md and PORTFOLIO_GUIDE.md in this project.
+Then explain to me in simple words (I'm not a developer):
+1. What this website is and what pages it has
+2. Which files hold the text, the images, and the styles
+3. The design rules I must not break
+Do not edit or run anything yet.</pre></div>
+
+  <div class="stage"><div class="sn">A2</div><div><h4>打開本機預覽（dev server）⭐</h4><p class="why2">這一步最容易卡，所以 prompt 寫得特別詳細：檢查環境 → 安裝 → 啟動 → 打開瀏覽器 → 教你怎麼關。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A2 — open the dev host</span><button type="button">Copy</button></div><pre>Help me run this website on my own computer so I can see it in my browser.
+Go one step at a time and explain each step in one simple sentence.
+
+1. Check if Node.js is installed and which version.
+   This project needs Node 22.23 or newer (see mise.toml).
+   If it's missing or too old, tell me the easiest way to install it
+   on my computer, then wait for me.
+2. Install the project's packages with npm install.
+   If mise is installed, run commands through "mise exec --".
+3. Start the development server with npm run dev.
+   It must only run on my own computer: http://127.0.0.1:4330
+4. Open http://127.0.0.1:4330 in my browser.
+5. Leave the server running. Then tell me:
+   - how to stop it
+   - how to start it again next time
+   - whether the page updates by itself when files change
+
+If you see any error, explain it in plain words before trying to fix it.</pre></div>
+  <figure class="illus">
+    <svg viewBox="0 0 720 200" role="img" aria-label="本機預覽伺服器：改檔案後瀏覽器自動更新，只有自己電腦看得到">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226" text-anchor="middle">
+        <rect x="10" y="10" width="700" height="180" rx="18" fill="#fbf6ec" stroke="#3b3226" stroke-width="2" stroke-dasharray="7 6"/>
+        <text x="110" y="38" font-size="14" fill="#6d604e">🏠 你的電腦（外面的人看不到）</text>
+        <rect x="40" y="60" width="150" height="90" rx="14" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="115" y="95" font-size="24">📝</text><text x="115" y="125" font-size="14">AI 改了檔案</text>
+        <rect x="285" y="60" width="150" height="90" rx="14" fill="#2b2620" stroke="#3b3226" stroke-width="2.5"/>
+        <text x="360" y="92" font-size="13" fill="#8fd0a8" font-family="JetBrains Mono, monospace">npm run dev</text>
+        <text x="360" y="118" font-size="14" fill="#f1e7d6">dev server</text><text x="360" y="138" font-size="12" fill="#b7a98f">一直開著</text>
+        <rect x="530" y="60" width="160" height="90" rx="14" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="530" y="60" width="160" height="18" rx="9" fill="#f4ecdc" stroke="#3b3226" stroke-width="2"/>
+        <text x="610" y="73" font-size="10" font-family="JetBrains Mono, monospace">127.0.0.1:4330</text>
+        <text x="610" y="112" font-size="24">✨</text><text x="610" y="138" font-size="14">瀏覽器自動更新</text>
+        <g stroke="#d9783b" stroke-width="3" fill="none" stroke-linecap="round"><path d="M195 105 h84"/><path d="M271 98 l8 7 l-8 7"/><path d="M440 105 h84"/><path d="M516 98 l8 7 l-8 7"/></g>
+        <text x="237" y="95" font-size="12" fill="#d9783b">偵測到變更</text><text x="482" y="95" font-size="12" fill="#d9783b">重新整理</text>
+        <text x="360" y="178" font-size="14" fill="#6d604e">關掉它：在跑 dev server 的視窗按 Ctrl＋C　｜　下次要看：再請 AI 執行 npm run dev</text>
+      </g>
+    </svg>
+  </figure>
+  <div class="note word"><b class="t">名詞小辭典：dev server、localhost</b><b>dev server</b>（開發伺服器）是一個在你電腦上跑的小程式，把專案「即時」變成網頁給瀏覽器看。<b>127.0.0.1</b>（也叫 localhost）的意思是「這台電腦自己」——所以這個網址只有你看得到，傳給別人是打不開的。要讓別人看，請用第 9 章的 GitHub Pages。</div>
+
+  <div class="stage"><div class="sn">A3</div><div><h4>第一次修改：只改一句話</h4><p class="why2">把 <code>[your new sentence]</code> 換成你想寫的句子。存檔後瀏覽器會自己更新——你親眼看到自己的修改上線（在本機）。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A3 — first tiny change</span><button type="button">Copy</button></div><pre>Follow the rules in PORTFOLIO_GUIDE.md.
+On the home page, change the main greeting text to: "[your new sentence]".
+Only change that text. Do not touch anything else.
+Keep the dev server running, then tell me which page to look at in the browser.</pre></div>
+
+  <div class="stage"><div class="sn">A4</div><div><h4>大一點的修改：先看計畫</h4><p class="why2">改方括號 <code>[...]</code> 裡的內容。也可以真的切換到 Plan Mode 再貼。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A4 — bigger change, plan first</span><button type="button">Copy</button></div><pre>Don't edit any files yet.
+I want to [describe one change, e.g. "add a new project page called Coffee App,
+using the same layout as the other project pages"].
+Read PORTFOLIO_GUIDE.md, then show me your plan: which files you will add or change,
+and what I will see in the browser when you're done. Wait for my approval.</pre></div>
+
+  <div class="stage"><div class="sn">A5</div><div><h4>改完之後：請 AI 做健康檢查</h4><p class="why2">說明書裡寫了「改完一定要跑哪些檢查」，叫 AI 照做就好。最後用第 9 章的方法 commit 存檔。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt A5 — check before saving</span><button type="button">Copy</button></div><pre>Run the checks described in PORTFOLIO_GUIDE.md
+(the production build and tools/audit.mjs).
+Tell me in plain words: did everything pass? If something is broken,
+explain what it is and which page it's on, and suggest a fix. Fix nothing yet.</pre></div>
+  <div class="note try"><b class="t">試試看</b>用第 7 章裝好的 skill 改一個區塊：<code>Use the frontend-design skill to make the About section feel warmer. Follow PORTFOLIO_GUIDE.md. Plan first.</code></div>
+
+  <h3>Part B｜從零做你自己的作品集（約 60 分鐘）</h3>
+  <p>Part A 玩熟之後，用同樣的方法做一個屬於你的。以下是那個作品集當初實際走過的流程：</p>
+  <figure class="illus">
+    <svg viewBox="0 0 720 170" role="img" aria-label="作品集流程：準備素材、讓 AI 學習、3 個方向、選定微調、正式網站、說明書、截圖檢查">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226" font-size="13" text-anchor="middle">
+        <line x1="50" y1="70" x2="670" y2="70" stroke="#e3d6bf" stroke-width="4" stroke-dasharray="2 8" stroke-linecap="round"/>
+        <g><circle cx="50" cy="70" r="30" fill="#f4ecdc" stroke="#3b3226" stroke-width="2.5"/><text x="50" y="78" font-size="22">📦</text><text x="50" y="122">0 準備素材</text></g>
+        <g><circle cx="153" cy="70" r="30" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/><text x="153" y="78" font-size="22">📖</text><text x="153" y="122">1 讓 AI 先學</text></g>
+        <g><circle cx="256" cy="70" r="30" fill="#f6c9a0" stroke="#3b3226" stroke-width="2.5"/><text x="256" y="78" font-size="22">🎨</text><text x="256" y="122">2 給 3 個方向</text></g>
+        <g><circle cx="359" cy="70" r="30" fill="#ddd3f0" stroke="#3b3226" stroke-width="2.5"/><text x="359" y="78" font-size="22">🎯</text><text x="359" y="122">3 選一個＋微調</text></g>
+        <g><circle cx="462" cy="70" r="30" fill="#bfe3d0" stroke="#3b3226" stroke-width="2.5"/><text x="462" y="78" font-size="22">🏗️</text><text x="462" y="122">4 做成正式網站</text></g>
+        <g><circle cx="565" cy="70" r="30" fill="#fff4e0" stroke="#3b3226" stroke-width="2.5"/><text x="565" y="78" font-size="22">📘</text><text x="565" y="122">5 寫說明書</text></g>
+        <g><circle cx="668" cy="70" r="30" fill="#f4c6c6" stroke="#3b3226" stroke-width="2.5"/><text x="668" y="78" font-size="22">📸</text><text x="668" y="122">6 截圖檢查</text></g>
+        <text x="360" y="158" font-size="14" fill="#6d604e">之後每一次修改：讀說明書 → 只改一件事 → 截圖給你看</text>
+      </g>
+    </svg>
+  </figure>
+
+  <div class="stage"><div class="sn">0</div><div><h4>準備素材（約 15 分鐘，不用 AI）</h4><p class="why2">AI 再厲害也不認識你。素材越完整，第一版就越像你。</p></div></div>
+  <div class="grid2" style="align-items:center">
+    <div class="term" style="margin:0"><div class="bar"><i style="background:#ff6b5e"></i><i style="background:#ffbd2e"></i><i style="background:#28c840"></i><span>my-portfolio/</span></div>
+<pre>📁 my-portfolio/
+├── 📄 resume.pdf <span class="c">← 履歷</span>
+├── 📁 projects/
+│   ├── 📁 01-app/  <span class="c">← 一個專案</span>
+│   │   ├── 📝 notes.md <span class="c">← 筆記</span>
+│   │   └── 🖼️ *.png
+│   └── 📁 02-tool/
+└── 📁 references/ <span class="c">← 參考</span></pre></div>
+    <ul class="check" style="margin:0">
+      <li><b>履歷</b>：AI 會用它寫「關於我」和經歷</li>
+      <li><b>每個專案的筆記</b>：隨手寫就好，條列也行</li>
+      <li><b>專案圖片</b>：設計稿、流程圖、照片</li>
+      <li><b>3–5 個你喜歡的作品集截圖</b>：比形容詞更準確</li>
+    </ul>
+  </div>
+
+  <div class="stage"><div class="sn">1</div><div><h4>讓 AI 先學習，不准寫程式</h4><p class="why2">先確認 AI 真的「懂你」。它的理解如果有錯，在這一步改最便宜。建議開 Plan Mode。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 1 — learn first</span><button type="button">Copy</button></div><pre>Before writing any code, read everything in this folder:
+- resume.pdf (my resume)
+- projects/ (one folder per project: notes + images)
+- references/ (screenshots of portfolios I like)
+
+Then tell me back, in simple words:
+1. Who I am and what kind of job I want
+2. Each project in one sentence
+3. The visual style you see in my references
+
+Ask me up to 5 questions about anything unclear.
+Do not create or edit any files yet.</pre></div>
+
+  <div class="stage"><div class="sn">2</div><div><h4>請 AI 提出 3 個截然不同的方向</h4><p class="why2">你是設計師，不是口述者——用「選」的比用「說」的快。只做首頁就好，省時間也省額度。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 2 — 3 directions</span><button type="button">Copy</button></div><pre>Use the frontend-design skill.
+Propose 3 very different visual directions for my portfolio.
+For each one, make a single static HTML mockup of the home page only,
+using my real content: direction-a.html, direction-b.html, direction-c.html.
+Give each direction a short name and explain the idea in 2 sentences.
+Then open all 3 in my browser so I can compare them.</pre></div>
+  <div class="grid3" style="margin-top:6px">
+    <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="url">direction-a.html</span></div><div style="padding:14px;background:#111;color:#e9e3ff;min-height:96px"><div style="font-family:Georgia,serif;font-style:italic;font-size:20px">Hello, I design.</div><div style="height:6px;width:60%;background:#b9a6f0;border-radius:3px;margin-top:10px"></div></div><figcaption style="padding:4px">A · 夜色雜誌風</figcaption></div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="url">direction-b.html</span></div><div style="padding:14px;background:#eef2ea;min-height:96px"><div style="font-weight:700;font-size:20px;color:#3d5a45">Hi, I'm a UX designer</div><div style="display:flex;gap:6px;margin-top:10px"><span style="flex:1;height:30px;background:#c9d8c5;border-radius:6px"></span><span style="flex:1;height:30px;background:#dfe7da;border-radius:6px"></span></div></div><figcaption style="padding:4px">B · 鼠尾草清爽風 ✓</figcaption></div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i><span class="url">direction-c.html</span></div><div style="padding:14px;background:#fff3e6;min-height:96px"><div style="font-family:var(--hand);font-size:20px;color:#d9783b">✿ hello there!</div><div style="display:flex;gap:6px;margin-top:10px"><span style="width:30px;height:30px;background:#f6c9a0;border-radius:50%"></span><span style="width:30px;height:30px;background:#bfe3d0;border-radius:50%"></span></div></div><figcaption style="padding:4px">C · 手作插畫風</figcaption></div>
+  </div>
+
+  <div class="stage"><div class="sn">3</div><div><h4>選一個，然後「一次只改一件事」</h4><p class="why2">這是整個案例最重要的教訓：說「整體再好看一點」，AI 會把你喜歡的部分也一起改掉。<b>指名要改的元素，並明說其他不准動。</b></p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 3 — change ONE thing</span><button type="button">Copy</button></div><pre>I choose direction B.
+Keep everything else exactly the same.
+Only change the hero section: make my name bigger and
+replace the photo with a small illustration of a desk.</pre></div>
+
+  <div class="stage"><div class="sn">4</div><div><h4>把選定的方向做成正式網站</h4><p class="why2">頁面一多，就一定要先看計畫。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 4 — build the real site</span><button type="button">Copy</button></div><pre>Turn direction B into a real website:
+a home page, an About page, and one page for each project.
+Plan first: show me the page list and the folder structure,
+and wait for my approval before you build anything.</pre></div>
+
+  <div class="stage"><div class="sn">5</div><div><h4>寫一份「給 AI 看的說明書」</h4><p class="why2">AI 每開一個新對話就會失憶。這份說明書記下你是誰、每一頁是什麼、你給過的所有修改意見——下一個 AI 讀完，就不會重犯同樣的錯。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 5 — write the guide</span><button type="button">Copy</button></div><pre>Write a file called PORTFOLIO_GUIDE.md for future AI assistants. Include:
+- Who I am and who the site is for
+- Every page and what it says
+- The design rules (fonts, colors, layout)
+- Every piece of feedback I gave you in this conversation, written as a rule
+- Known problems and how to check the site
+Any AI that edits this site must read this file first.</pre></div>
+
+  <div class="stage"><div class="sn">6</div><div><h4>讓 AI 自己截圖檢查</h4><p class="why2">設計師是用眼睛判斷的，所以讓 AI 也「看」一次：手機版、電腦版、壞掉的圖片、跑版。</p></div></div>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 6 — screenshot check</span><button type="button">Copy</button></div><pre>Take full-page screenshots of every page, at desktop width and phone width.
+Check for broken images, text that overflows the screen, and JavaScript errors.
+Show me the screenshots and a short list of problems. Fix nothing yet.</pre></div>
+
+  <h3>之後每一次修改，都用這個開頭 ⭐</h3>
+  <div class="prompt"><div class="ph"><span>📋 Prompt 7 — every new conversation</span><button type="button">Copy</button></div><pre>Read PORTFOLIO_GUIDE.md first and follow its rules.
+Then: [describe the ONE change you want today].
+Only change what I named. When you are done, show me a screenshot.</pre></div>
+  <div class="note tip"><b class="t">這個案例學到的 3 件事</b>① 先讓 AI 學你，再讓它做　② 用「選」代替「描述」：請它給 3 個方向　③ 把你的每一次回饋寫進說明書，AI 才會越用越懂你</div>
+
+  <div class="done" data-key="case"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>先做 Part A：貼上 Prompt A0，讓收到的作品集在你電腦跑起來。</div></div>
+</section>
+
+<!-- ============ 9 GITHUB ============ -->
 <section id="github">
-  <h2><span class="chip">07</span>GitHub：存檔、時光機、免費上線</h2>
-  <div class="meta"><span>⏱ 約 25 分鐘</span><span>✍️ 要動手</span><span>🏆 完成後你會有公開網址</span></div>
-  <div class="tldr"><b>一句話重點</b>GitHub = 雲端存檔＋版本時光機＋免費網站空間。註冊帳號後，上傳和上線都可以請 AI 幫你做。</div>
-  <p class="lead">GitHub 是一個放程式檔案的網站。對你來說，它有三個超實用的功能：</p>
+  <h2><span class="chip">09</span>Git、GitHub 與上線</h2>
+  <div class="meta"><span>⏱ 約 35 分鐘</span><span>✍️ 要動手</span><span>🏆 完成後你會有公開網址</span></div>
+  <div class="tldr"><b>一句話重點</b><b style="color:var(--paper)">Git</b> 是電腦裡記錄每個版本的工具；<b style="color:var(--paper)">GitHub</b> 是放這些版本的網站；<b style="color:var(--paper)">GitHub Desktop</b> 是用按鈕操作 Git 的 App。上傳、上線可以叫 AI 做，也可以自己用 GitHub Desktop 按。</div>
+  <h3>先分清楚：Git、GitHub、GitHub Desktop</h3>
+  <p>這三個名字很像，新手最常搞混。用「拍照」來比喻：</p>
+  <figure class="illus">
+    <svg viewBox="0 0 720 250" role="img" aria-label="Git 像相機、GitHub 像雲端相簿、GitHub Desktop 像相機的觸控螢幕">
+      <g font-family="LXGW WenKai TC, sans-serif" fill="#3b3226" text-anchor="middle">
+        <rect x="15" y="15" width="220" height="220" rx="18" fill="#fdf1e6" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="80" y="55" width="90" height="60" rx="10" fill="#fff" stroke="#3b3226" stroke-width="2.5"/><circle cx="125" cy="85" r="18" fill="#c7dcf2" stroke="#3b3226" stroke-width="2.5"/><rect x="92" y="47" width="22" height="10" rx="3" fill="#3b3226"/>
+        <text x="125" y="148" font-size="21" font-weight="700">Git</text>
+        <text x="125" y="172" font-size="14">📷 相機（在你電腦裡）</text>
+        <text x="125" y="198" font-size="13" fill="#6d604e">每按一次快門＝一個版本</text>
+        <text x="125" y="218" font-size="13" fill="#6d604e">不用網路也能用</text>
+
+        <rect x="250" y="15" width="220" height="220" rx="18" fill="#eef3fa" stroke="#3b3226" stroke-width="2.5"/>
+        <path d="M310 100 a26 26 0 0 1 48 -14 a22 22 0 0 1 38 16 a18 18 0 0 1 -4 36 h-78 a20 20 0 0 1 -4 -38z" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="338" y="96" width="16" height="12" rx="2" fill="#f6c9a0" stroke="#3b3226"/><rect x="358" y="96" width="16" height="12" rx="2" fill="#bfe3d0" stroke="#3b3226"/><rect x="378" y="96" width="16" height="12" rx="2" fill="#ddd3f0" stroke="#3b3226"/>
+        <text x="360" y="168" font-size="21" font-weight="700">GitHub</text>
+        <text x="360" y="192" font-size="14">☁️ 雲端相簿（一個網站）</text>
+        <text x="360" y="216" font-size="13" fill="#6d604e">備份、分享、變成網頁</text>
+
+        <rect x="485" y="15" width="220" height="220" rx="18" fill="#eef8f2" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="545" y="45" width="100" height="74" rx="10" fill="#fff" stroke="#3b3226" stroke-width="2.5"/>
+        <rect x="557" y="58" width="76" height="10" rx="4" fill="#e3d6bf"/><rect x="557" y="74" width="50" height="10" rx="4" fill="#e3d6bf"/>
+        <rect x="557" y="94" width="76" height="16" rx="5" fill="#2f8a63"/><text x="595" y="106" font-size="10" fill="#fff">Commit</text>
+        <text x="595" y="148" font-size="21" font-weight="700">GitHub Desktop</text>
+        <text x="595" y="172" font-size="14">👆 相機的觸控螢幕（App）</text>
+        <text x="595" y="198" font-size="13" fill="#6d604e">用按鈕操作 Git</text>
+        <text x="595" y="218" font-size="13" fill="#6d604e">不用打任何指令</text>
+      </g>
+    </svg>
+    <figcaption>Git 負責「拍」、GitHub 負責「存在雲端」、GitHub Desktop 讓你「用按的」</figcaption>
+  </figure>
+  <table class="tbl">
+    <thead><tr><th></th><th>Git</th><th>GitHub</th><th>GitHub Desktop</th></tr></thead>
+    <tbody>
+      <tr><td>它是什麼</td><td>記錄版本的工具（程式）</td><td>網站 github.com</td><td>電腦上的 App</td></tr>
+      <tr><td>在哪裡</td><td>你的電腦</td><td>網路上</td><td>你的電腦</td></tr>
+      <tr><td>怎麼操作</td><td>打指令（或叫 AI 打）</td><td>瀏覽器</td><td>按按鈕</td></tr>
+      <tr><td>要錢嗎</td><td>免費</td><td>個人使用免費</td><td>免費</td></tr>
+    </tbody>
+  </table>
+
+  <h3>GitHub 能幫你做的三件事</h3>
+  <p class="lead">對你來說，GitHub 有三個超實用的功能：</p>
 
   <figure class="illus">
     <svg viewBox="0 0 720 220" role="img" aria-label="GitHub 的三個功能：雲端備份、版本時光機、免費上線">
@@ -831,12 +1155,50 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
     </svg>
   </figure>
 
+
+  <h3>GitHub Desktop：不用打指令的 Git</h3>
+  <p>AI 可以幫你 commit、push，但很多人還是想<b>自己看得到</b>：AI 到底改了什麼？存了幾個版本？GitHub Desktop 就是一扇窗，把這些變成看得懂的畫面。</p>
+  <figure style="margin:18px 0">
+    <div class="gd" style="position:relative">
+      <div class="top"><div><small>Current repository</small>📁 my-first-site ▾</div><div><small>Current branch</small>🌿 main ▾</div><div><small>Push origin</small><span class="cn">4</span>⬆️ 推上 GitHub（1）</div></div>
+      <div class="body">
+        <div class="side">
+          <div class="tabs"><span><span class="cn">1</span>Changes (2)</span><span>History</span></div>
+          <div class="file">☑ index.html <i>●</i></div>
+          <div class="file">☑ style.css <i>●</i></div>
+          <div class="commit"><div class="in">加入作品集區塊</div><div class="in" style="color:#999;min-height:34px">Description（可不填）</div><div class="btn"><span class="cn">3</span>Commit to main</div></div>
+        </div>
+        <div class="diff">
+          <div class="hd"><span class="cn">2</span>index.html</div>
+          <div>&lt;h1&gt;嗨，我是小安&lt;/h1&gt;</div>
+          <div class="del">- &lt;p&gt;喜歡貓和咖啡&lt;/p&gt;</div>
+          <div class="add">+ &lt;p&gt;喜歡貓、咖啡和旅行&lt;/p&gt;</div>
+          <div class="add">+ &lt;section id="works"&gt;作品集&lt;/section&gt;</div>
+          <div>&lt;button&gt;今日小語&lt;/button&gt;</div>
+        </div>
+      </div>
+          </div>
+    <figcaption>① 改了哪些檔案　② 紅色＝刪掉、綠色＝新增　③ 寫一句說明後按 Commit　④ 按 Push 推上 GitHub</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><b class="h">下載安裝</b>到 <a href="https://desktop.github.com/" target="_blank" rel="noopener">desktop.github.com</a> 下載（Mac／Windows），打開後用 GitHub 帳號登入。</li>
+    <li><b class="h">加入你的資料夾</b>選單 <b>File → Add local repository</b>，選 <code>my-first-site</code>。如果它說「這還不是 Git repository」，按 <b>create a repository</b> 就好。</li>
+    <li><b class="h">看 AI 改了什麼</b>每次 AI 改完，切到 GitHub Desktop，左邊是改過的檔案，右邊紅綠標出差異。</li>
+    <li><b class="h">存檔：Commit</b>左下角寫一句說明（例如「加入作品集」），按 <b>Commit to main</b>。</li>
+    <li><b class="h">上傳：Publish／Push</b>第一次按 <b>Publish repository</b>（記得取消勾選 Keep this code private，才能用免費的 Pages）；之後每次按 <b>Push origin</b>。</li>
+  </ol>
+  <div class="note tip"><b class="t">AI 和 GitHub Desktop 可以一起用</b>例如：叫 AI 改網頁 → 在 GitHub Desktop 看差異 → 滿意就自己 Commit＋Push。改壞了？在 <b>History</b> 分頁對某個版本按右鍵 → <b>Revert</b>，就回到之前。</div>
+
   <h3>把你的網頁放上網（逐步）</h3>
   <ol class="steps">
     <li><b class="h">註冊 GitHub 帳號</b>到 <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> 註冊。<br><span style="font-size:15px;color:var(--ink2)">使用者名稱會出現在網址裡（例如 <code>xiaoan.github.io</code>），取一個你喜歡的、簡短的英文名字。</span></li>
-    <li><b class="h">讓 AI 幫你連上 GitHub</b>對 AI 說：
-      <div class="chat" style="margin:10px 0"><div class="bub me"><span class="who">你</span>我是 Git 和 GitHub 新手。請幫我把這個資料夾上傳到 GitHub，建立一個叫 my-first-site 的公開 repo。每一步都用簡單的話告訴我你在做什麼，需要我操作的時候請停下來教我。</div></div>
-      <span style="font-size:15px;color:var(--ink2)">第一次會需要登入 GitHub 授權，AI 會帶你完成（通常是跳出瀏覽器，點「授權」）。</span></li>
+    <li><b class="h">上傳到 GitHub（二選一）</b><b>A. 叫 AI 做：</b>複製這段貼給 AI
+      <div class="prompt"><div class="ph"><span>📋 Prompt — upload to GitHub</span><button type="button">Copy</button></div><pre>I'm new to Git and GitHub.
+Please upload this folder to GitHub as a new public repository called my-first-site.
+Explain each step in simple words.
+Whenever I need to do something myself (like logging in), stop and tell me exactly what to click.</pre></div>
+      <span style="font-size:15px;color:var(--ink2)">第一次會需要登入 GitHub 授權，AI 會帶你完成（通常是跳出瀏覽器，點「授權」）。</span><br>
+      <b>B. 自己按：</b>用上面的 GitHub Desktop，按 <b>Publish repository</b>。</li>
     <li><b class="h">打開 GitHub Pages</b>可以請 AI 幫你開，或自己到 GitHub 網頁操作：
       <figure style="margin:14px 0">
         <div class="browser">
@@ -862,7 +1224,7 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
         <figcaption>Settings → Pages → Branch 選 main → Save</figcaption>
       </figure></li>
     <li><b class="h">等 1–2 分鐘，拿到網址 🎉</b>頁面上方會出現 <code>https://你的名字.github.io/my-first-site/</code>，打開就是你的網站，手機也能看，傳給朋友吧！</li>
-    <li><b class="h">之後每次更新</b>改完後跟 AI 說：「<b>幫我 commit 並 push，說明寫『加入作品集』</b>」。等一兩分鐘，網址上的內容就會更新。</li>
+    <li><b class="h">之後每次更新</b>改完後跟 AI 說 <code>Commit and push my changes with the message "Add portfolio section"</code>，或在 GitHub Desktop 按 Commit → Push。等一兩分鐘，網址上的內容就會更新。</li>
   </ol>
 
   <div class="note warn"><b class="t">公開 repo 誰都看得到</b>不要把密碼、身分證字號、住址、私人照片、API 金鑰放進去。不確定能不能放的東西，先問 AI：「這個資料夾裡有沒有不適合公開的東西？」</div>
@@ -871,14 +1233,16 @@ footer{margin-top:60px;padding-top:24px;border-top:2px dashed var(--line);font-s
   <div class="vids">
     <div class="vid" data-id="atqcAb7MFAM" data-len="19:16"><div class="meta"><b>給非技術人員的 Github 教學，Vibe Coding 必學的基礎技能</b><span class="ch">Gary Chen（中文）</span><br><span class="why">最對味：專為非技術人員</span></div></div>
     <div class="vid" data-id="gUFHwJ1y80g" data-len="7:24"><div class="meta"><b>GitHub Pages 怎麼免費架網站？從檔案到網址的 3 個步驟</b><span class="ch">六角學院（中文）</span><br><span class="why">7 分鐘學會上線</span></div></div>
+    <div class="vid" data-id="G74KUQGYUHM" data-len="5:38"><div class="meta"><b>AI 新手必看！GitHub Desktop 安裝與實作</b><span class="ch">AI生活玩家（中文）</span><br><span class="why">5 分鐘學會 Desktop</span></div></div>
+    <div class="vid" data-id="8Dd7KRpKeaE" data-len="22:16"><div class="meta"><b>Git, GitHub, &amp; GitHub Desktop for beginners</b><span class="ch">Coder Coder（英文）</span><br><span class="why">三者關係＋Desktop 完整示範</span></div></div>
     <div class="vid" data-id="FKXRiAiQFiY" data-len="15:51"><div class="meta"><b>Git 和 GitHub 零基礎快速上手</b><span class="ch">PAPAYA 電腦教室（中文）</span><br><span class="why">想多懂一點再看</span></div></div>
   </div>
   <div class="done" data-key="github"><button type="button">✓ 我讀完了</button><div class="next"><b>下一步：</b>把你的網址傳給一個朋友 🎉</div></div>
 </section>
 
-<!-- ============ 8 FAQ ============ -->
+<!-- ============ 10 FAQ ============ -->
 <section id="faq">
-  <h2><span class="chip">08</span>卡關了怎麼辦 & 下一步</h2>
+  <h2><span class="chip">10</span>卡關了怎麼辦 & 下一步</h2>
   <div class="meta"><span>⏱ 約 5 分鐘</span><span>🔖 卡住時再回來看</span></div>
   <div class="tldr"><b>一句話重點</b>看不懂的錯誤 → 整段貼給 AI。改壞了 → 請 AI 回到上一個 commit。</div>
 
@@ -960,6 +1324,14 @@ document.querySelectorAll('.copy').forEach(c => {
   };
 });
 
+// prompt 複製
+document.querySelectorAll('.prompt').forEach(p => {
+  const b = p.querySelector('button');
+  b.onclick = () => navigator.clipboard.writeText(p.querySelector('pre').textContent).then(() => {
+    b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy', 1500);
+  });
+});
+
 // 目錄高亮 + 閱讀進度
 const links = [...document.querySelectorAll('#toc a')];
 const secs = links.map(a => document.querySelector(a.getAttribute('href')));
@@ -985,7 +1357,7 @@ function paintDone() {
   links.forEach(a => a.classList.toggle('fin', doneSet.has(a.getAttribute('href').slice(1))));
   const n = [...doneSet].filter(k => k !== 'hello').length;
   document.getElementById('cnum').textContent = n;
-  document.getElementById('cbar').style.width = (n / 8 * 100) + '%';
+  document.getElementById('cbar').style.width = (n / 10 * 100) + '%';
 }
 document.querySelectorAll('.done button').forEach(b => b.onclick = () => {
   const k = b.parentElement.dataset.key;
